@@ -7,59 +7,47 @@
 <meta name="theme-color" content="#1c150e" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-  /* ============================================================
-     NGATU — ink on barkcloth (professional, near-monochrome)
-     paper  #e9ddc2  tapa ground   ·  card #f4ebd7 lighter cloth
-     ink    #221a12  candlenut soot ·  garnet #7c2230 koka accent
-     gold   #9c7a3c  aged brass (hairlines / crest)
-     ============================================================ */
   :root{
     --paper:#e9ddc2; --paper-2:#e1d2b2; --card:#f4ebd7; --card-2:#efe4cc;
     --ink:#221a12; --ink-2:#3a2e20; --muted:#6f6047; --muted-2:#8c7c60;
-    --garnet:#7c2230; --garnet-deep:#5e1824; --gold:#9c7a3c; --gold-soft:#c2a96f;
+    --garnet:#7c2230; --garnet-deep:#5e1824; --gold:#9c7a3c; --gold-soft:#c2a96f; --gold-text:#8a6a2e;
     --line:rgba(34,26,18,.14); --line-strong:rgba(34,26,18,.22);
-    --radius:14px; --shadow:0 18px 38px -24px rgba(34,26,18,.55); --maxw:560px;
+    --radius:14px; --shadow:0 18px 38px -24px rgba(34,26,18,.5); --maxw:580px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{background:var(--paper);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;line-height:1.55;min-height:100vh;}
-  .app{max-width:var(--maxw);margin:0 auto;min-height:100vh;background:var(--paper);
-    box-shadow:0 0 60px -30px rgba(0,0,0,.4);}
-
-  /* hidden SVG defs (feather symbol) */
+  .app{max-width:var(--maxw);margin:0 auto;min-height:100vh;background:var(--paper);box-shadow:0 0 60px -30px rgba(0,0,0,.4);}
   .defs{position:absolute;width:0;height:0;overflow:hidden;}
 
-  /* pinwheel ngatu band */
   .band{height:18px;width:100%;border-top:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);
     background:var(--paper-2) url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='36'%20height='36'%20viewBox='0%200%2036%2036'%3E%3Crect%20width='36'%20height='36'%20fill='transparent'/%3E%3Cpolygon%20points='18,0%2018,18%200,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='36,18%2018,18%2036,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='0,18%2018,18%200,36'%20fill='%231f1813'/%3E%3Cpolygon%20points='18,36%2018,18%2036,36'%20fill='%231f1813'/%3E%3C/svg%3E");background-repeat:repeat-x;background-position:center;background-size:auto 18px;}
 
-  /* ---------- header ---------- */
   header.hero{position:relative;background:linear-gradient(168deg,#2c2114 0%,#1a130c 100%);
-    padding:calc(env(safe-area-inset-top) + 26px) 22px 24px;text-align:center;overflow:hidden;}
-  .hero__wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);width:330px;height:auto;
-    color:var(--gold);opacity:.10;pointer-events:none;}
-  .hero__photo{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;
-    transition:opacity .6s;mix-blend-mode:soft-light;}
+    padding:calc(env(safe-area-inset-top) + 28px) 22px 24px;text-align:center;overflow:hidden;}
+  .hero__wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);width:330px;height:auto;color:var(--gold);opacity:.10;pointer-events:none;}
+  .hero__photo{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .6s;mix-blend-mode:soft-light;}
   .hero__photo.on{opacity:.4;}
   .hero__inner{position:relative;}
-  .crest{width:50px;height:84px;margin:0 auto 10px;display:block;color:var(--gold-soft);}
-  .hero__eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;margin:0 0 6px;}
+  .crest{width:48px;height:80px;margin:0 auto 10px;display:block;color:var(--gold-soft);}
+  .hero__eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;margin:0 0 6px;}
   .hero__title{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(24px,6.4vw,31px);line-height:1.12;margin:0;color:#f4ebd7;}
   .hero__tongan{font-family:"Playfair Display",serif;font-style:italic;font-weight:500;color:var(--gold-soft);font-size:15px;margin:6px 0 0;}
-  .hero__share{position:absolute;top:calc(env(safe-area-inset-top) + 14px);right:14px;z-index:5;
-    width:38px;height:38px;border-radius:50%;border:1px solid rgba(194,169,111,.4);background:rgba(244,235,215,.06);
-    color:var(--gold-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;}
-  .hero__share:hover{background:rgba(244,235,215,.14);}
+  .hero__btn{position:absolute;top:calc(env(safe-area-inset-top) + 14px);z-index:5;height:36px;border-radius:20px;
+    border:1px solid rgba(194,169,111,.4);background:rgba(244,235,215,.06);color:var(--gold-soft);
+    display:flex;align-items:center;gap:6px;cursor:pointer;transition:.2s;font-family:inherit;font-weight:600;font-size:12px;padding:0 13px;}
+  .hero__btn:hover{background:rgba(244,235,215,.14);}
+  .hero__btn--lang{left:14px;}
+  .hero__btn--share{right:14px;width:36px;padding:0;justify-content:center;border-radius:50%;}
 
-  /* ---------- tabs ---------- */
-  .tabs{display:flex;gap:8px;max-width:var(--maxw);margin:0 auto;padding:16px 18px 6px;
-    position:sticky;top:0;z-index:30;background:linear-gradient(180deg,var(--paper) 74%,transparent);}
+  .tabs{display:flex;gap:8px;max-width:var(--maxw);margin:0 auto;padding:16px 18px 6px;position:sticky;top:0;z-index:30;
+    background:linear-gradient(180deg,var(--paper) 74%,transparent);}
   .tab{flex:1;appearance:none;border:1px solid var(--line-strong);background:var(--card);color:var(--muted);
-    font-family:"Manrope",sans-serif;font-weight:600;font-size:13.5px;padding:11px 10px;border-radius:11px;
-    cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+    font-family:"Manrope",sans-serif;font-weight:600;font-size:13.5px;padding:11px 10px;border-radius:11px;cursor:pointer;
+    transition:.2s;display:flex;flex-direction:column;align-items:center;gap:2px;}
   .tab small{font-style:italic;font-weight:500;font-size:10.5px;color:var(--muted-2);}
   .tab[aria-selected="true"]{background:var(--garnet);border-color:var(--garnet);color:#f4ebd7;box-shadow:0 8px 18px -10px rgba(124,34,48,.7);}
   .tab[aria-selected="true"] small{color:rgba(244,235,215,.78);}
@@ -69,130 +57,109 @@
   .panel.on{display:block;}
   @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
-  /* feather divider */
   .divider{display:flex;align-items:center;gap:14px;margin:26px 4px 14px;color:var(--gold);}
   .divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);}
   .divider .fd{width:22px;height:38px;color:var(--gold);flex:0 0 auto;}
-  .divider__label{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);font-weight:700;}
-
-  .section-label{display:flex;align-items:center;gap:10px;margin:22px 2px 12px;font-size:11px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);font-weight:700;}
+  .section-label{display:flex;align-items:center;gap:10px;margin:22px 2px 12px;font-size:11px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--muted-2);font-weight:700;}
   .section-label::after{content:"";flex:1;height:1px;background:var(--line);}
 
-  /* cadence note */
-  .cadence{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
-    border-left:3px solid var(--gold);border-radius:11px;padding:11px 14px;margin:4px 2px 0;font-size:13px;color:var(--muted);}
+  .cadence{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:11px;padding:11px 14px;margin:4px 2px 0;font-size:13px;color:var(--muted);}
   .cadence b{color:var(--garnet);font-weight:700;}
 
-  /* featured "this Sunday" */
-  .featured{position:relative;background:var(--card);color:var(--ink);border:1px solid var(--line);
-    border-radius:var(--radius);padding:20px 20px 22px;box-shadow:var(--shadow);overflow:hidden;}
-  .featured::before{content:"";position:absolute;top:-10px;right:-10px;width:96px;height:96px;opacity:.10;
-    background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='36'%20height='36'%20viewBox='0%200%2036%2036'%3E%3Crect%20width='36'%20height='36'%20fill='transparent'/%3E%3Cpolygon%20points='18,0%2018,18%200,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='36,18%2018,18%2036,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='0,18%2018,18%200,36'%20fill='%231f1813'/%3E%3Cpolygon%20points='18,36%2018,18%2036,36'%20fill='%231f1813'/%3E%3C/svg%3E");background-size:24px;}
-  .featured__tag{display:inline-block;background:var(--garnet);color:#f4ebd7;font-size:10.5px;font-weight:800;
-    letter-spacing:.16em;text-transform:uppercase;padding:5px 11px;border-radius:20px;margin-bottom:12px;}
-  .featured__date{font-size:12.5px;font-weight:700;color:var(--garnet);letter-spacing:.04em;margin:0 0 4px;}
-  .featured__title{font-family:"Playfair Display",serif;font-weight:700;font-size:23px;line-height:1.2;margin:0 0 6px;color:var(--ink);}
-  .featured__src{font-size:13px;color:var(--muted);margin:0 0 16px;}
-  .teacher{display:flex;align-items:center;gap:11px;}
-  .avatar{width:44px;height:44px;border-radius:50%;flex:0 0 auto;background:var(--garnet);background-size:cover;
-    background-position:center;display:flex;align-items:center;justify-content:center;color:#f4ebd7;font-weight:800;
-    font-size:15px;box-shadow:inset 0 0 0 2px rgba(156,122,60,.5);}
-  .teacher__meta b{display:block;font-size:14.5px;color:var(--ink);}
-  .teacher__meta span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);}
-  .material-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;font-weight:700;
-    color:var(--garnet);text-decoration:none;border:1px solid var(--line-strong);padding:8px 13px;border-radius:9px;background:var(--card-2);}
-  .material-link:hover{border-color:var(--garnet);}
-
-  /* upcoming list */
-  .week{display:flex;gap:14px;align-items:center;padding:15px 4px;border-bottom:1px solid var(--line);}
-  .week:last-child{border-bottom:none;}
-  .week__date{flex:0 0 54px;text-align:center;border-right:1px solid var(--line-strong);padding-right:12px;}
-  .week__date b{display:block;font-family:"Playfair Display",serif;font-size:22px;line-height:1;color:var(--garnet);}
-  .week__date span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);}
-  .week__body{flex:1;min-width:0;}
-  .week__title{font-weight:600;font-size:15px;color:var(--ink);margin:0 0 2px;}
-  .week__src{font-size:12px;color:var(--muted-2);margin:0;}
-  .week__who{display:flex;align-items:center;gap:7px;margin-top:6px;}
-  .chip{width:26px;height:26px;border-radius:50%;background:var(--card-2);border:1px solid var(--gold);background-size:cover;
-    background-position:center;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--garnet);}
-  .week__name{font-size:12.5px;color:var(--muted);}
-  .week__link{margin-left:6px;color:var(--garnet);display:inline-flex;}
-  .week__edit{margin-left:auto;background:none;border:none;color:var(--muted-2);cursor:pointer;font-size:18px;padding:4px;}
-  .week__edit:hover{color:var(--garnet);}
+  /* ---------- lesson card (WJ8 layout) ---------- */
+  .lcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
+  .lcard--now{border-color:var(--garnet);box-shadow:0 18px 38px -22px rgba(124,34,48,.45);}
+  .lcard__top{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .datepill{display:inline-block;background:rgba(156,122,60,.16);color:var(--gold-text);border:1px solid rgba(156,122,60,.34);
+    font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;}
+  .nowtag{margin-left:auto;background:var(--garnet);color:#f4ebd7;font-size:10px;font-weight:800;letter-spacing:.13em;
+    text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+  .lcard__body{display:flex;gap:15px;}
+  .lcard__avatar{width:72px;height:72px;border-radius:50%;flex:0 0 auto;background:var(--garnet);background-size:cover;
+    background-position:center;display:flex;align-items:center;justify-content:center;color:#f4ebd7;font-weight:800;font-size:20px;
+    box-shadow:inset 0 0 0 2px rgba(156,122,60,.5);}
+  .lcard__main{flex:1;min-width:0;}
+  .lcard__title{font-family:"Playfair Display",serif;font-weight:700;font-size:21px;line-height:1.2;margin:0 0 2px;color:var(--ink);}
+  .lcard__title2{font-family:"Playfair Display",serif;font-weight:600;font-style:italic;font-size:15px;color:var(--gold);margin:0;}
+  .lcard__quote{font-family:"Playfair Display",serif;font-style:italic;font-size:14.5px;color:var(--ink-2);margin:10px 0 3px;line-height:1.45;}
+  .lcard__quote2{font-size:13px;color:var(--muted);margin:0;line-height:1.45;}
+  .lcard__speaker{font-size:13px;color:var(--muted-2);margin:10px 0 0;}
+  .lcard__speaker b{color:var(--ink-2);font-weight:700;}
+  .lcard__foot{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line);}
+  .lcard__foot .cap{color:var(--gold);flex:0 0 auto;}
+  .taught-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-2);font-weight:700;}
+  .taught-name{font-size:13.5px;color:var(--ink-2);font-weight:600;}
+  .foot-right{margin-left:auto;display:inline-flex;align-items:center;gap:12px;}
+  .lcard__open{color:var(--garnet);display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;text-decoration:none;}
+  .lcard__open:hover{text-decoration:underline;}
+  .lcard__edit{background:none;border:none;color:var(--muted-2);font-size:18px;cursor:pointer;padding:2px;}
+  .lcard__edit:hover{color:var(--garnet);}
 
   /* Savior's Way */
   .sw-intro{color:var(--muted);font-size:15px;margin:4px 2px 8px;}
   .sw-photo{height:160px;border-radius:var(--radius);margin:16px 0 4px;overflow:hidden;position:relative;
     background:var(--card-2);background-size:cover;background-position:center;border:1px solid var(--line);}
-  .sw-photo .ph-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
-    color:var(--muted-2);font-size:12px;padding:20px;}
+  .sw-photo .ph-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted-2);font-size:12px;padding:20px;}
   .sw-photo code{color:var(--garnet);}
   .part-head{font-family:"Playfair Display",serif;font-weight:600;font-size:18px;color:var(--ink);margin:0;}
   .part-tongan{font-style:italic;color:var(--gold);font-size:12.5px;margin:2px 0 0;}
-  .sec-card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;
-    padding:14px 16px;margin-bottom:11px;box-shadow:0 6px 16px -16px rgba(0,0,0,.5);}
+  .sec-card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;margin-bottom:11px;box-shadow:0 6px 16px -16px rgba(0,0,0,.5);}
   .sec-card h4{font-family:"Playfair Display",serif;font-weight:600;font-size:16px;margin:0 0 4px;color:var(--ink);}
   .sec-card p{margin:0 0 10px;color:var(--muted);font-size:13.5px;}
-  .read-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--garnet);
-    text-decoration:none;letter-spacing:.02em;}
+  .read-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--garnet);text-decoration:none;}
   .read-link:hover{text-decoration:underline;}
-  blockquote.scripture{margin:18px 2px;padding:16px 18px;border-radius:12px;
-    background:linear-gradient(180deg,rgba(124,34,48,.07),rgba(124,34,48,.02));border:1px solid rgba(124,34,48,.2);}
+  blockquote.scripture{margin:18px 2px;padding:16px 18px;border-radius:12px;background:linear-gradient(180deg,rgba(124,34,48,.07),rgba(124,34,48,.02));border:1px solid rgba(124,34,48,.2);}
   blockquote.scripture p{margin:0 0 6px;font-family:"Playfair Display",serif;font-style:italic;font-size:16px;color:var(--ink);}
-  blockquote.scripture cite{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--garnet);font-style:normal;}
-  .manual-cta{display:block;text-align:center;background:var(--ink);color:#f4ebd7;text-decoration:none;font-weight:700;
-    font-size:14px;border-radius:12px;padding:15px;margin:18px 2px 6px;letter-spacing:.02em;}
+  blockquote.scripture cite{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--garnet);font-style:normal;}
+  .manual-cta{display:block;text-align:center;background:var(--ink);color:#f4ebd7;text-decoration:none;font-weight:700;font-size:14px;border-radius:12px;padding:15px;margin:18px 2px 6px;}
   .manual-cta:hover{background:var(--ink-2);}
 
-  /* edit affordances */
   .admin-bar{display:flex;gap:8px;align-items:center;margin:22px 2px 6px;flex-wrap:wrap;}
-  .btn{appearance:none;cursor:pointer;font-family:"Manrope",sans-serif;font-weight:600;font-size:13px;border-radius:10px;
-    padding:10px 15px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);transition:.2s;}
+  .btn{appearance:none;cursor:pointer;font-family:"Manrope",sans-serif;font-weight:600;font-size:13px;border-radius:10px;padding:10px 15px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);transition:.2s;}
   .btn:hover{border-color:var(--garnet);}
   .btn--garnet{background:var(--garnet);border-color:var(--garnet);color:#f4ebd7;}
   .btn--ghost{background:transparent;}
   .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
   .editing-note{font-size:12px;color:var(--garnet);}
+  .signout-link{background:none;border:none;color:var(--muted-2);font-size:12px;cursor:pointer;text-decoration:underline;padding:4px;}
 
-  /* modal / sheet */
   .modal{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;}
   .modal.on{display:flex;}
   .modal__scrim{position:absolute;inset:0;background:rgba(28,18,10,.55);backdrop-filter:blur(3px);}
   .modal__card{position:relative;width:100%;max-width:var(--maxw);background:var(--card);border:1px solid var(--line-strong);
-    border-radius:18px 18px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom) + 22px);max-height:86vh;overflow:auto;
+    border-radius:18px 18px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom) + 22px);max-height:88vh;overflow:auto;
     box-shadow:0 -20px 50px -20px rgba(0,0,0,.45);animation:rise .3s ease;}
   .modal__card h2{font-family:"Playfair Display",serif;font-size:20px;margin:0 0 14px;color:var(--ink);}
   .field{margin-bottom:13px;}
-  .field label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:5px;}
-  .field input{width:100%;background:var(--paper);border:1px solid var(--line-strong);color:var(--ink);border-radius:10px;
-    padding:11px 12px;font-size:15px;font-family:inherit;}
+  .field label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-bottom:5px;}
+  .field input{width:100%;background:var(--paper);border:1px solid var(--line-strong);color:var(--ink);border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;}
   .field input:focus{outline:none;border-color:var(--garnet);}
   .field .hint{font-size:11px;color:var(--muted-2);margin-top:4px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;}
   .modal__row{display:flex;gap:10px;margin-top:8px;}
   .modal__row .btn{flex:1;}
   .delete-link{background:none;border:none;color:var(--garnet);font-size:13px;cursor:pointer;margin-top:10px;padding:4px;}
+  .signin-error{color:var(--garnet);font-size:13px;margin:4px 0 0;display:none;}
 
-  /* share sheet */
   .share-list{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
-  .share-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:12px;
-    background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;cursor:pointer;}
+  .share-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;cursor:pointer;}
   .share-item:hover{border-color:var(--garnet);}
   .share-item svg{color:var(--garnet);flex:0 0 auto;}
 
-  footer.tag{text-align:center;color:var(--muted-2);font-size:11px;padding:28px 20px 14px;}
+  footer.tag{text-align:center;color:var(--muted-2);font-size:11px;padding:20px 20px 16px;}
   footer.tag .mark{color:var(--garnet);}
   .sync-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted-2);margin-right:5px;vertical-align:middle;}
   .sync-dot.live{background:#5b7d3f;}
-  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#f4ebd7;
-    padding:11px 18px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:80;}
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#f4ebd7;padding:11px 18px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:80;}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media (max-width:420px){.grid2{grid-template-columns:1fr;}}
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;}}
 </style>
 </head>
 <body>
-
-<!-- feather kupesi symbol (reused as crest, dividers, watermark) -->
 <svg class="defs" aria-hidden="true"><symbol id="feather" viewBox="0 0 240 400">
 <polygon points="120,0 240,200 120,400 0,200" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
 <line x1="120" y1="6" x2="120" y2="394" stroke="currentColor" stroke-width="2.0"/>
@@ -305,14 +272,13 @@
 
 <div class="app">
   <header class="hero">
-    <button class="hero__share" id="shareBtn" aria-label="Share">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
-    </button>
+    <button class="hero__btn hero__btn--lang" id="langBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg><span id="langLabel">Lea faka-Tonga</span></button>
+    <button class="hero__btn hero__btn--share" id="shareBtn" aria-label="Share"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg></button>
     <svg class="hero__wm" viewBox="0 0 240 400" aria-hidden="true"><use href="#feather"/></svg>
     <div class="hero__photo" id="heroPhoto"></div>
     <div class="hero__inner">
       <svg class="crest" viewBox="0 0 240 400" aria-hidden="true"><use href="#feather"/></svg>
-      <p class="hero__eyebrow">Elders Quorum · Instructor Guide</p>
+      <p class="hero__eyebrow" id="heroEyebrow">Elders Quorum · Instructor Guide</p>
       <h1 class="hero__title" id="quorumName">Riverton 24th Tongan Ward</h1>
       <p class="hero__tongan" id="quorumTongan">Kōlomu ʻo e Kaumātuʻa</p>
     </div>
@@ -321,84 +287,84 @@
 
   <nav class="tabs" role="tablist" aria-label="Sections">
     <button class="tab" id="tab-sched" role="tab" aria-selected="true" aria-controls="panel-sched">
-      Schedule <small>Lēsoni</small>
+      <span id="tabSchedMain">Schedule</span> <small id="tabSchedSub">Lēsoni</small>
     </button>
     <button class="tab" id="tab-sw" role="tab" aria-selected="false" aria-controls="panel-sw">
-      The Savior's Way <small>Founga ʻa e Fakamoʻui</small>
+      <span id="tabSwMain">The Savior's Way</span> <small id="tabSwSub">Founga ʻa e Fakamoʻui</small>
     </button>
   </nav>
 
-  <!-- ===================== SCHEDULE ===================== -->
+  <!-- SCHEDULE -->
   <section class="panel on" id="panel-sched" role="tabpanel" aria-labelledby="tab-sched">
-    <div class="cadence">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#9c7a3c" stroke-width="1.5"/><path d="M8 4.5V8l2.5 1.5" stroke="#9c7a3c" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <span>Lessons run <b>every two weeks</b> through August, then <b>weekly from September</b>.</span>
-    </div>
-
-    <div class="section-label">This Sunday</div>
-    <div id="featuredWrap"></div>
-
-    <div class="divider"><svg class="fd" viewBox="0 0 240 400"><use href="#feather"/></svg></div>
-    <div class="section-label">Coming up</div>
-    <div id="upcomingWrap"></div>
-
+    <div class="cadence"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#9c7a3c" stroke-width="1.5"/><path d="M8 4.5V8l2.5 1.5" stroke="#9c7a3c" stroke-width="1.5" stroke-linecap="round"/></svg><span id="cadenceText"></span></div>
+    <div class="section-label" id="lblComing">Lessons</div>
+    <div id="schedWrap"></div>
     <div class="admin-bar">
       <button class="btn btn--ghost" id="addWeekBtn" style="display:none;">+ Add a week</button>
       <button class="btn btn--ghost" id="editToggle">Instructor edit</button>
-      <span class="editing-note" id="editNote" style="display:none;">Editing on — tap a card to change it</span>
+      <span class="editing-note" id="editNote" style="display:none;"></span>
+      <button class="signout-link" id="signoutBtn" style="display:none;">Sign out</button>
     </div>
   </section>
 
-  <!-- ===================== SAVIOR'S WAY ===================== -->
+  <!-- SAVIOR'S WAY -->
   <section class="panel" id="panel-sw" role="tabpanel" aria-labelledby="tab-sw">
-    <p class="sw-intro">The complete manual, divided by section. Tap <b>Read on Gospel Library</b> on any section to open the full, official text.</p>
+    <p class="sw-intro" id="swIntro"></p>
     <div class="sw-photo" id="swPhoto"><div class="ph-note">Add a photo here — the quorum, a temple, or Christ teaching.<br>Set <code>IMAGES.saviorPhoto</code> in the script.</div></div>
-
-    <blockquote class="scripture">
-      <p>"I am the way, the truth, and the life."</p>
-      <cite>John 14:6</cite>
-    </blockquote>
-
+    <blockquote class="scripture"><p>"I am the way, the truth, and the life."</p><cite>John 14:6</cite></blockquote>
     <div id="swWrap"></div>
-
-    <a class="manual-cta" id="manualCta" href="#" target="_blank" rel="noopener">Open the full manual on Gospel Library →</a>
+    <a class="manual-cta" id="manualCta" href="#" target="_blank" rel="noopener"></a>
   </section>
 
   <footer class="tag">
-    <span class="sync-dot" id="syncDot"></span><span id="syncLabel">Saved on this device</span>
-    <div style="margin-top:6px;">Made with <span class="mark">◆</span> for the quorum</div>
+    <div class="divider" style="margin:10px 6px 18px;"><svg class="fd" viewBox="0 0 240 400"><use href="#feather"/></svg></div>
+    <span class="sync-dot" id="syncDot"></span><span id="syncLabel"></span>
+    <div style="margin-top:6px;" id="footerMade"></div>
   </footer>
 </div>
 
-<!-- ===================== EDIT MODAL ===================== -->
+<!-- EDIT MODAL -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal__scrim" id="modalScrim"></div>
   <div class="modal__card">
     <h2 id="modalTitle">Edit lesson</h2>
-    <div class="field"><label>Date (e.g. Jul 12)</label><input id="fDate" type="text" /></div>
-    <div class="field"><label>Lesson title</label><input id="fTitle" type="text" /></div>
-    <div class="field"><label>Source (e.g. Conference, April 2026 · Elder ___)</label><input id="fSrc" type="text" /></div>
-    <div class="field"><label>Teacher name</label><input id="fTeacher" type="text" /></div>
-    <div class="field"><label>Teacher photo URL</label><input id="fPhoto" type="url" placeholder="https://…" /><div class="hint">Paste an image link to show a profile photo. Leave blank for initials.</div></div>
-    <div class="field"><label>Lesson / talk link</label><input id="fLink" type="url" placeholder="https://…" /><div class="hint">Link to the Conference talk or Come, Follow Me material.</div></div>
-    <div class="modal__row">
-      <button class="btn btn--ghost" id="cancelBtn">Cancel</button>
-      <button class="btn btn--garnet" id="saveBtn">Save</button>
+    <div class="field"><label>Date (e.g. Jun 28, 2026)</label><input id="fDate" type="text" /></div>
+    <div class="field"><label>Lesson title (English)</label><input id="fTitle" type="text" /></div>
+    <div class="field"><label>Lesson title (Tongan)</label><input id="fTitleTo" type="text" /></div>
+    <div class="grid2">
+      <div class="field"><label>Speaker</label><input id="fSpeaker" type="text" /></div>
+      <div class="field"><label>Speaker role</label><input id="fRole" type="text" /></div>
     </div>
-    <button class="delete-link" id="deleteBtn" style="display:none;">Delete this week</button>
+    <div class="field"><label>Speaker photo URL</label><input id="fPhoto" type="url" placeholder="https://…" /><div class="hint">Paste a portrait link, or leave blank for initials.</div></div>
+    <div class="field"><label>Quote (English)</label><input id="fQuote" type="text" /></div>
+    <div class="field"><label>Quote (Tongan)</label><input id="fQuoteTo" type="text" /></div>
+    <div class="field"><label>Lesson / talk link</label><input id="fLink" type="url" placeholder="https://…" /></div>
+    <div class="field"><label>Taught by (instructor)</label><input id="fTeacher" type="text" /></div>
+    <div class="modal__row"><button class="btn btn--ghost" id="cancelBtn">Cancel</button><button class="btn btn--garnet" id="saveBtn">Save</button></div>
+    <button class="delete-link" id="deleteBtn" style="display:none;">Delete this lesson</button>
   </div>
 </div>
 
-<!-- ===================== SHARE SHEET ===================== -->
+<!-- SIGN-IN MODAL -->
+<div class="modal" id="signinModal" role="dialog" aria-modal="true" aria-labelledby="signinTitle">
+  <div class="modal__scrim" id="signinScrim"></div>
+  <div class="modal__card">
+    <h2 id="signinTitle">Instructor sign-in</h2>
+    <div class="field"><label id="signinLabel">Passcode</label><input id="fPass" type="password" autocomplete="off" /><p class="signin-error" id="signinError">Incorrect passcode.</p></div>
+    <div class="modal__row"><button class="btn btn--ghost" id="signinCancel">Cancel</button><button class="btn btn--garnet" id="signinGo">Sign in</button></div>
+  </div>
+</div>
+
+<!-- SHARE SHEET -->
 <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
   <div class="modal__scrim" id="shareScrim"></div>
   <div class="modal__card">
     <h2 id="shareTitle">Share this guide</h2>
     <div class="share-list">
-      <a class="share-item" id="shEmail"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a>
-      <a class="share-item" id="shText"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text message</a>
-      <div class="share-item" id="shCopy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy link</div>
-      <div class="share-item" id="shMore" style="display:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.2" y1="10.8" x2="15.8" y2="6.2"/><line x1="8.2" y1="13.2" x2="15.8" y2="17.8"/></svg>More sharing options…</div>
+      <a class="share-item" id="shEmail"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span id="shEmailL">Email</span></a>
+      <a class="share-item" id="shText"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span id="shTextL">Text message</span></a>
+      <div class="share-item" id="shCopy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span id="shCopyL">Copy link</span></div>
+      <div class="share-item" id="shMore" style="display:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.2" y1="10.8" x2="15.8" y2="6.2"/><line x1="8.2" y1="13.2" x2="15.8" y2="17.8"/></svg><span id="shMoreL">More sharing options…</span></div>
     </div>
     <div class="modal__row"><button class="btn btn--ghost" id="shareCancel" style="flex:1;">Close</button></div>
   </div>
@@ -407,84 +373,121 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-/* =================================================================
-   CONFIG — edit these
-   ================================================================= */
+/* ===================== CONFIG ===================== */
 const QUORUM = { name: "Riverton 24th Tongan Ward", tongan: "Kōlomu ʻo e Kaumātuʻa" };
 const IMAGES = { headerPhoto: "", saviorPhoto: "" };
-const EDIT_PASSCODE = "2410";
-
-// Firebase (optional). Blank = saves on this device. Paste config to sync for everyone.
-const FIREBASE_CONFIG = { /* apiKey:"", authDomain:"", projectId:"", appId:"" */ };
-
-// Official manual (Gospel Library). Per-section URLs default here; paste exact deep links to refine.
+const EDIT_PASSCODE = "r24@2026";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBnCqpckET4HBSqgucysNGfwtjWjbXc6B8",
+  authDomain: "r24-eq-lessons.firebaseapp.com",
+  projectId: "r24-eq-lessons",
+  storageBucket: "r24-eq-lessons.firebasestorage.app",
+  messagingSenderId: "105190174979",
+  appId: "1:105190174979:web:669843f36d71aa38e8f936"
+};
 const MANUAL_URL = "https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=eng";
 
-// Starting schedule — biweekly through August, then weekly from September.
+/* April 2026 Conference talks. titleTo = Tongan (draft — please verify). quotes blank for you to add. */
 const SEED = [
-  { id:"w1", date:"Jun 28", title:"Bearing One Another's Burdens", src:"Conference · April 2026", teacher:"Sione Taufa", photo:"", link:"" },
-  { id:"w2", date:"Jul 12", title:"The Power of Daily Repentance", src:"Conference · April 2026", teacher:"Viliami Mahe", photo:"", link:"" },
-  { id:"w3", date:"Jul 26", title:"Ministering as the Savior Did", src:"Teaching in the Savior's Way", teacher:"EQ Presidency", photo:"", link:"" },
-  { id:"w4", date:"Aug 9",  title:"Temple Covenants & the Family", src:"Conference · April 2026", teacher:"Inoke Langi", photo:"", link:"" },
-  { id:"w5", date:"Aug 23", title:"Faith to Act", src:"Conference · April 2026", teacher:"To be assigned", photo:"", link:"" },
-  { id:"w6", date:"Sep 6",  title:"Weekly lessons begin", src:"Come, Follow Me", teacher:"To be assigned", photo:"", link:"" },
-  { id:"w7", date:"Sep 13", title:"", src:"Come, Follow Me", teacher:"To be assigned", photo:"", link:"" }
+  { id:"w1",  date:"Jun 28, 2026", title:"Because of Jesus Christ", titleTo:"Koeʻuhí ko Sīsū Kalaisi", quote:"", quoteTo:"", speaker:"Dale G. Renlund", role:"Quorum of the Twelve Apostles", teacher:"", photo:"", link:"" },
+  { id:"w2",  date:"Jul 12, 2026", title:"Alive in Christ", titleTo:"Moʻui ʻia Kalaisi", quote:"", quoteTo:"", speaker:"Dallin H. Oaks", role:"President of the Church", teacher:"", photo:"", link:"" },
+  { id:"w3",  date:"Jul 26, 2026", title:"'Tis Eastertide: No One Walks Alone", titleTo:"Kuo Hokosia ʻa e Toetuʻú: ʻOku ʻIkai ke Luelue Tokotaha ha Taha", quote:"", quoteTo:"", speaker:"Gerrit W. Gong", role:"Quorum of the Twelve Apostles", teacher:"", photo:"", link:"" },
+  { id:"w4",  date:"Aug 9, 2026",  title:'"I Will Give Away All My Sins to Know Thee"', titleTo:"“Te u Liʻaki ʻEku Angahala Kotoa ke u ʻIloʻi Koe”", quote:"", quoteTo:"", speaker:"Wan-Liang Wu", role:"", teacher:"", photo:"", link:"" },
+  { id:"w5",  date:"Aug 23, 2026", title:"Eternal Marriage Is an Eternal Journey", titleTo:"Ko e Mali Taʻengatá ko e Fononga Taʻengata", quote:"", quoteTo:"", speaker:"Neil L. Andersen", role:"Quorum of the Twelve Apostles", teacher:"", photo:"", link:"" },
+  { id:"w6",  date:"Sep 6, 2026",  title:"Come unto Christ—Together", titleTo:"Haʻu kia Kalaisi—Fakataha", quote:"", quoteTo:"", speaker:"Taniela B. Wakolo", role:"General Authority Seventy", teacher:"", photo:"", link:"" },
+  { id:"w7",  date:"Sep 13, 2026", title:"Best Days and Worst Days", titleTo:"Ngaahi ʻAho Lelei Tahá mo e Ngaahi ʻAho Kovi Taha", quote:"", quoteTo:"", speaker:"Emily Belle Freeman", role:"", teacher:"", photo:"", link:"" },
+  { id:"w8",  date:"Sep 20, 2026", title:"Follow the Prophet; He Knows the Way", titleTo:"Muimui ki he Palōfitá; ʻOkú Ne ʻIloʻi ʻa e Halá", quote:"", quoteTo:"", speaker:"Michael John U. Teh", role:"", teacher:"", photo:"", link:"" },
+  { id:"w9",  date:"Sep 27, 2026", title:"Christ—Author and Finisher of Our Faith", titleTo:"Kalaisi—Tupuʻanga mo Fakaʻosi ʻo ʻEtau Tuí", quote:"", quoteTo:"", speaker:"Eduardo F. Ortega", role:"", teacher:"", photo:"", link:"" },
+  { id:"w10", date:"Oct 4, 2026",  title:"Tithing—Putting God First", titleTo:"Vahehongofulú—Fakamuʻomuʻa ʻa e ʻOtuá", quote:"", quoteTo:"", speaker:"Jorge T. Becerra", role:"", teacher:"", photo:"", link:"" },
+  { id:"w11", date:"Oct 11, 2026", title:"Jesus Christ—the True Vine", titleTo:"Sīsū Kalaisi—ko e Vaine Moʻoní", quote:"", quoteTo:"", speaker:"Ulisses Soares", role:"Quorum of the Twelve Apostles", teacher:"", photo:"", link:"" },
+  { id:"w12", date:"Oct 18, 2026", title:"I Feel My Savior's Love", titleTo:"ʻOku Ou Ongoʻi ʻa e ʻOfa ʻa Hoku Fakamoʻuí", quote:"", quoteTo:"", speaker:"Pedro V. Lansal", role:"", teacher:"", photo:"", link:"" },
+  { id:"w13", date:"Oct 25, 2026", title:"", titleTo:"", quote:"", quoteTo:"", speaker:"", role:"", teacher:"", photo:"", link:"" }
 ];
 
-// Teaching in the Savior's Way — full section structure (2016/2022). Summaries are plain-language;
-// the official text opens via each section's link.
-const SW_URL = (slug)=>MANUAL_URL; // override individual items below with real deep links anytime
+/* Teaching in the Savior's Way — sections + Tongan (draft). */
 const SAVIORS_WAY = [
-  { part:"Introduction", tongan:"", items:[
-    { t:"Preface", s:"Who this guide is for, and how to use it in personal study and teacher council meetings." },
-    { t:"Teacher Council Meetings", s:"How wards hold monthly councils where teachers counsel together about Christlike teaching." },
-    { t:"Teaching in the Savior's Way", s:"The Savior taught from who He was; we learn His way by striving to live as He lived." },
+  { part:"Introduction", partTo:"Talateu", tongan:"", items:[
+    { t:"Preface", tTo:"Talateú", s:"Who this guide is for, and how to use it in personal study and teacher council meetings.", sTo:"Ko hai ʻa e tataki ní, pea founga hono ngāueʻaki ʻi he ako fakafoʻituitui mo e ngaahi fakataha alea ʻa e kau faiakó." },
+    { t:"Teacher Council Meetings", tTo:"Ngaahi Fakataha Alea ʻa e Kau Faiakó", s:"How wards hold monthly councils where teachers counsel together about Christlike teaching.", sTo:"Founga ʻoku fai ai ʻe he ngaahi uōtí ʻa e fakataha alea fakamāhina ke fealēleaʻaki ai ʻa e kau faiakó fekauʻaki mo e akoʻi faka-Kalaisí." },
+    { t:"Teaching in the Savior's Way", tTo:"Akoʻi ʻi he Founga ʻa e Fakamoʻuí", s:"The Savior taught from who He was; we learn His way by striving to live as He lived.", sTo:"Naʻe akoʻi ʻe he Fakamoʻuí mei He koeʻuhi ko Ia; ʻoku tau ako ʻene foungá ʻaki hono feinga ke moʻui ʻo hangē ko ʻene moʻuí." },
   ]},
-  { part:"Part 1 · Love Those You Teach", tongan:"ʻOfaʻi ʻa Kinautolu ʻOku Ke Akoʻi", items:[
-    { t:"Love Those You Teach", s:"Love is the reason and motivation for teaching — pray for learners by name and see them as God sees them.",
+  { part:"Part 1 · Love Those You Teach", partTo:"Konga 1 · ʻOfaʻi ʻa Kinautolu ʻOku Ke Akoʻí", tongan:"ʻOfaʻi ʻa Kinautolu ʻOku Ke Akoʻí", items:[
+    { t:"Love Those You Teach", tTo:"ʻOfaʻi ʻa Kinautolu ʻOku Ke Akoʻí", s:"Love is the reason and motivation for teaching — pray for learners by name and see them as God sees them.", sTo:"Ko e ʻofá ko e ʻuhinga mo e ueʻi ʻo e akoʻí — lotua ʻa e kau akó ʻi honau hingoá pea sio kiate kinautolu ʻo hangē ko e sio ʻa e ʻOtuá.",
       url:"https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022/07-part-2/08-love-those-you-teach?lang=eng" },
-    { t:"Focus on People, Not Lessons", s:"Center on the needs of those you teach rather than simply covering the material." },
-    { t:"Reach Out to Those Who Do Not Attend", s:"Like the shepherd who sought the one, minister to class members beyond the classroom." },
+    { t:"Focus on People, Not Lessons", tTo:"Fakatefito ʻi he Kakaí, ʻIkai ko e Lēsoní", s:"Center on the needs of those you teach rather than simply covering the material.", sTo:"Tokangaʻi ʻa e ngaahi fie maʻu ʻa kinautolu ʻoku ke akoʻí kae ʻikai ko hono ʻosikiʻi pē ʻo e lēsoní." },
+    { t:"Reach Out to Those Who Do Not Attend", tTo:"Aʻu Atu kiate Kinautolu ʻOku ʻIkai Kau Maí", s:"Like the shepherd who sought the one, minister to class members beyond the classroom.", sTo:"ʻO hangē ko e tauhi-sipi naʻá ne kumi ki he tahá, tokoniʻi ʻa e mēmipa ʻo e kalasí ʻi tuaʻā ʻi he loki akó." },
   ]},
-  { part:"Part 2 · Teach by the Spirit", tongan:"Akoʻi ʻaki ʻa e Laumālie", items:[
-    { t:"Teach by the Spirit", s:"The Spirit is the real teacher; invite Him into both your preparation and your class." },
-    { t:"Prepare Yourself Spiritually", s:"Personal worthiness and study prepare you to teach with power." },
-    { t:"Live the Gospel of Jesus Christ", s:"Your own example gives credibility and power to what you teach." },
-    { t:"Create an Environment That Invites the Spirit", s:"Foster reverence, safety, and respect so the Spirit can be present." },
-    { t:"Take Advantage of Spontaneous Teaching Moments", s:"Be ready to teach in unplanned moments, as the Savior often did." },
-    { t:"Make a Plan", s:"Prepare with purpose while staying open to the Spirit's direction." },
+  { part:"Part 2 · Teach by the Spirit", partTo:"Konga 2 · Akoʻi ʻaki ʻa e Laumālié", tongan:"Akoʻi ʻaki ʻa e Laumālié", items:[
+    { t:"Teach by the Spirit", tTo:"Akoʻi ʻaki ʻa e Laumālié", s:"The Spirit is the real teacher; invite Him into both your preparation and your class.", sTo:"Ko e Laumālié ko e faiako moʻoní; fakaafeʻi Ia ki hoʻo teuteú mo hoʻo kalasí fakatouʻosi." },
+    { t:"Prepare Yourself Spiritually", tTo:"Teuteuʻi Koe Fakalaumālié", s:"Personal worthiness and study prepare you to teach with power.", sTo:"Ko e taau fakafoʻituituí mo e akó ʻokú na teuteuʻi koe ke akoʻi ʻaki ʻa e mālohí." },
+    { t:"Live the Gospel of Jesus Christ", tTo:"Moʻuiʻaki ʻa e Ongoongoleleí", s:"Your own example gives credibility and power to what you teach.", sTo:"Ko hoʻo sīpinga ʻaʻaú ʻokú ne ʻomi ʻa e falalaʻanga mo e mālohi ki he meʻa ʻokú ke akoʻí." },
+    { t:"Create an Environment That Invites the Spirit", tTo:"Fakatupu ha ʻĀtakai ʻOku Fakaafeʻi ai ʻa e Laumālié", s:"Foster reverence, safety, and respect so the Spirit can be present.", sTo:"Poupouʻi ʻa e fakaʻapaʻapá, malú, mo e faka-ʻapaʻapa kae lava ke ʻi ai ʻa e Laumālié." },
+    { t:"Take Advantage of Spontaneous Teaching Moments", tTo:"Ngāueʻaki ʻa e Ngaahi Faingamālie Akoʻi Fakafokifā", s:"Be ready to teach in unplanned moments, as the Savior often did.", sTo:"Mateuteu ke akoʻi ʻi he ngaahi taimi taʻe-palani, ʻo hangē ko ia naʻe fai maʻu pē ʻe he Fakamoʻuí." },
+    { t:"Make a Plan", tTo:"Fai ha Palani", s:"Prepare with purpose while staying open to the Spirit's direction.", sTo:"Teuteu mo ha taumuʻa kae kei ava ki he tataki ʻa e Laumālié." },
   ]},
-  { part:"Part 3 · Teach the Doctrine", tongan:"Akoʻi ʻa e Tokāteline", items:[
-    { t:"Teach the Doctrine", s:"Anchor lessons in scripture and the words of prophets; pure doctrine changes hearts." },
-    { t:"Use Music, Stories, and Art to Teach Doctrine", s:"Use varied means to help doctrine reach the heart." },
-    { t:"Respond to Difficult Questions with Faith", s:"Meet honest questions with patience, faith, and trustworthy sources." },
-    { t:"Teach the Children", s:"Adapt to how children learn — keep it simple, loving, and engaging." },
-    { t:"Teach the Youth", s:"Help youth find personal meaning and act on gospel truths." },
+  { part:"Part 3 · Teach the Doctrine", partTo:"Konga 3 · Akoʻi ʻa e Tokāteliné", tongan:"Akoʻi ʻa e Tokāteliné", items:[
+    { t:"Teach the Doctrine", tTo:"Akoʻi ʻa e Tokāteliné", s:"Anchor lessons in scripture and the words of prophets; pure doctrine changes hearts.", sTo:"Fakatefitoʻi ʻa e lēsoní ʻi he folofolá mo e lea ʻa e kau palōfitá; ʻoku liliu ʻe he tokāteline maʻá ʻa e lotó." },
+    { t:"Use Music, Stories, and Art to Teach Doctrine", tTo:"Ngāueʻaki ʻa e Faivá, Talanoá, mo e ʻAtí", s:"Use varied means to help doctrine reach the heart.", sTo:"Ngāueʻaki ha ngaahi founga kehekehe ke tokoni ke aʻu ʻa e tokāteliné ki he lotó." },
+    { t:"Respond to Difficult Questions with Faith", tTo:"Tali ʻa e Ngaahi Fehuʻi Faingataʻá ʻaki ʻa e Tuí", s:"Meet honest questions with patience, faith, and trustworthy sources.", sTo:"Tali ʻa e ngaahi fehuʻi totonú ʻaki ʻa e faʻa kātakí, tuí, mo e ngaahi maʻuʻanga falalaʻanga." },
+    { t:"Teach the Children", tTo:"Akoʻi ʻa e Fānaú", s:"Adapt to how children learn — keep it simple, loving, and engaging.", sTo:"Fakahoko ki he founga ako ʻa e fānaú — faingofua, ʻofa, mo fakamānako." },
+    { t:"Teach the Youth", tTo:"Akoʻi ʻa e Toʻu Tupú", s:"Help youth find personal meaning and act on gospel truths.", sTo:"Tokoni ki he toʻu tupú ke nau ʻiloʻi ʻa e ʻuhinga fakafoʻituituí pea ngāue ki he ngaahi moʻoni ʻo e ongoongoleleí." },
   ]},
-  { part:"Part 4 · Invite Diligent Learning", tongan:"Fakaafeʻi ki he Ako Faivelenga", items:[
-    { t:"Invite Diligent Learning", s:"Real learning means changing — invite learners to engage, not just listen." },
-    { t:"Ask Inspired Questions", s:"Use questions that invite reflection, feeling, and testimony." },
-    { t:"Lead Inspired Discussions", s:"Guide discussions that let learners teach and lift one another." },
-    { t:"Invite Learners to Act", s:"Call learners to apply and live what they learn." },
-    { t:"Support Gospel Learning in the Home", s:"Encourage learning to continue and take root at home." },
+  { part:"Part 4 · Invite Diligent Learning", partTo:"Konga 4 · Fakaafeʻi ki he Ako Faivelengá", tongan:"Fakaafeʻi ki he Ako Faivelengá", items:[
+    { t:"Invite Diligent Learning", tTo:"Fakaafeʻi ki he Ako Faivelengá", s:"Real learning means changing — invite learners to engage, not just listen.", sTo:"Ko e ako moʻoní ko e liliú — fakaafeʻi ʻa e kau akó ke kau ki ai, ʻo ʻikai ko e fanongo pē." },
+    { t:"Ask Inspired Questions", tTo:"ʻEke ha Ngaahi Fehuʻi Fakalaumālie", s:"Use questions that invite reflection, feeling, and testimony.", sTo:"Ngāueʻaki ha ngaahi fehuʻi ʻoku fakaafeʻi ʻa e fakalaulauloto, ongó, mo e fakamoʻoní." },
+    { t:"Lead Inspired Discussions", tTo:"Takiekina ha Ngaahi Alea Fakalaumālie", s:"Guide discussions that let learners teach and lift one another.", sTo:"Tataki ʻa e ngaahi aleá ke faka-faingamālieʻi ʻa e kau akó ke nau feakoʻiʻaki mo fehakohakoʻaki." },
+    { t:"Invite Learners to Act", tTo:"Fakaafeʻi ʻa e Kau Akó ke Ngāue", s:"Call learners to apply and live what they learn.", sTo:"Ui ʻa e kau akó ke nau ngāueʻaki mo moʻuiʻaki ʻa e meʻa ʻoku nau akó." },
+    { t:"Support Gospel Learning in the Home", tTo:"Poupouʻi ʻa e Ako Ongoongolelei ʻi ʻApí", s:"Encourage learning to continue and take root at home.", sTo:"Fakalototoʻaʻi ʻa e ako ke hokohoko atu mo aka ʻi ʻapí." },
   ]},
-  { part:"Appendix", tongan:"", items:[
-    { t:"Improving as a Christlike Teacher: A Personal Evaluation", s:"A self-assessment to help you grow as a Christlike teacher." },
-    { t:"Orienting New Teachers", s:"A leader's responsibility to prepare and support new teachers." },
+  { part:"Appendix", partTo:"ʻApeniti", tongan:"", items:[
+    { t:"Improving as a Christlike Teacher: A Personal Evaluation", tTo:"Fakalakalaka ko ha Faiako Faka-Kalaisi: Ko ha Sivi Fakafoʻituitui", s:"A self-assessment to help you grow as a Christlike teacher.", sTo:"Ko ha sivi-fakafoʻituitui ke tokoni ke ke tupu ko ha faiako faka-Kalaisi." },
+    { t:"Orienting New Teachers", tTo:"Fakahinohinoʻi ʻa e Kau Faiako Foʻoú", s:"A leader's responsibility to prepare and support new teachers.", sTo:"Ko e fatongia ʻa e takí ke teuteuʻi mo poupouʻi ʻa e kau faiako foʻoú." },
   ]},
 ];
 
-/* =================================================================
-   APP
-   ================================================================= */
+/* ===================== TRANSLATIONS (UI chrome) ===================== */
+const UI = {
+  eyebrow:{en:"Elders Quorum · Instructor Guide", to:"Kōlomu ʻo e Kaumātuʻa · Tataki Faiako"},
+  schedMain:{en:"Schedule", to:"Lēsoni"}, schedSub:{en:"Lēsoni", to:"Schedule"},
+  swMain:{en:"The Savior's Way", to:"Founga ʻa e Fakamoʻui"}, swSub:{en:"Founga ʻa e Fakamoʻui", to:"The Savior's Way"},
+  swIntro:{en:"The complete manual, divided by section. Tap <b>Read on Gospel Library</b> on any section to open the full, official text.",
+           to:"Ko e tohi kakató, vahevahe ʻi he ngaahi kongá. Lomiʻi ʻa <b>Lau ʻi he Gospel Library</b> ʻi ha konga ke fakaava ʻa e kakato ʻo e tohí."},
+  manualCta:{en:"Open the full manual on Gospel Library →", to:"Fakaava ʻa e tohi kakató ʻi he Gospel Library →"},
+  lessons:{en:"Lessons", to:"Ngaahi Lēsoni"},
+  thisSunday:{en:"This Sunday", to:"Sāpate Ní"},
+  taughtBy:{en:"Taught by", to:"Akoʻi ʻe"},
+  toAssign:{en:"—", to:"—"},
+  openMaterial:{en:"Open material", to:"Fakaava lēsoni"},
+  readGL:{en:"Read on Gospel Library", to:"Lau ʻi he Gospel Library"},
+  cadence:{en:"Lessons run <b>every two weeks</b> through August, then <b>weekly from September</b>.",
+           to:"ʻOku fai ʻa e lēsoní ʻi he <b>uike ʻe ua</b> ʻo aʻu ki ʻAokosí, pea <b>fakauike mei Sēpitemá</b>."},
+  editToggle:{en:"Instructor edit", to:"Liliu (Faiako)"}, editDone:{en:"Done editing", to:"Kuo ʻosi"},
+  addWeek:{en:"+ Add a week", to:"+ Tānaki uike"},
+  editNote:{en:"Editing on — tap a card to change it", to:"Liliu — lomiʻi ha kaati ke liliu"},
+  signout:{en:"Sign out", to:"Hū kituʻa"},
+  saved:{en:"Saved on this device", to:"Tauhi ʻi he meʻangaué ni"},
+  synced:{en:"Synced — everyone sees the latest", to:"Sync — ʻoku sio kotoa ki he fakamuimuitahá"},
+  made:{en:'Made with <span class="mark">◆</span> for the quorum', to:'Ngaohi ʻaki <span class="mark">◆</span> maʻá e kōlomú'},
+  shareTitle:{en:"Share this guide", to:"Vahevahe ʻa e tataki ní"},
+  shEmail:{en:"Email", to:"ʻĪmeili"}, shText:{en:"Text message", to:"Pōpoaki"}, shCopy:{en:"Copy link", to:"Hiki ʻa e link"},
+  shMore:{en:"More sharing options…", to:"Founga vahevahe kehe…"}, close:{en:"Close", to:"Tāpuni"},
+  signinTitle:{en:"Instructor sign-in", to:"Hū mai (Faiako)"}, signinLabel:{en:"Passcode", to:"Kōtio"},
+  signinGo:{en:"Sign in", to:"Hū"}, langLabel:{en:"Lea faka-Tonga", to:"English"},
+  copied:{en:"Link copied", to:"Kuo hiki ʻa e linké"},
+};
+
+/* ===================== APP ===================== */
 const $ = (s,r=document)=>r.querySelector(s);
 const esc = s => (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const initials = n => (n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase();
-const linkIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+const linkIcon='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+const capIcon='<svg class="cap" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9 12 5 2 9l10 4 10-4Z"/><path d="M6 11v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>';
+
+let lang = localStorage.getItem("r24-lang") || "en";
+const U = k => UI[k][lang];
 
 $("#quorumName").textContent = QUORUM.name;
 $("#quorumTongan").textContent = QUORUM.tongan;
-$("#manualCta").href = MANUAL_URL;
 if (IMAGES.headerPhoto){ const h=$("#heroPhoto"); h.style.backgroundImage=`url("${IMAGES.headerPhoto}")`; h.classList.add("on"); }
 if (IMAGES.saviorPhoto){ const p=$("#swPhoto"); p.style.backgroundImage=`url("${IMAGES.saviorPhoto}")`; p.querySelector(".ph-note").style.display="none"; }
 
@@ -494,26 +497,53 @@ tabs.forEach(([t,p])=>$(t).addEventListener("click",()=>{
   tabs.forEach(([tt,pp])=>{ const sel=tt===t; $(tt).setAttribute("aria-selected",sel); $(pp).classList.toggle("on",sel); });
 }));
 
-// ---- Savior's Way render ----
+// ---- apply language to static chrome ----
+function applyLang(){
+  $("#heroEyebrow").textContent = U("eyebrow");
+  $("#tabSchedMain").textContent = U("schedMain"); $("#tabSchedSub").textContent = U("schedSub");
+  $("#tabSwMain").textContent = U("swMain"); $("#tabSwSub").textContent = U("swSub");
+  $("#swIntro").innerHTML = U("swIntro");
+  $("#manualCta").textContent = U("manualCta");
+  $("#lblComing").textContent = U("lessons");
+  $("#cadenceText").innerHTML = U("cadence");
+  $("#editToggle").textContent = editing ? U("editDone") : U("editToggle");
+  $("#addWeekBtn").textContent = U("addWeek");
+  $("#editNote").textContent = U("editNote");
+  $("#signoutBtn").textContent = U("signout");
+  $("#footerMade").innerHTML = U("made");
+  $("#shareTitle").textContent = U("shareTitle");
+  $("#shEmailL").textContent = U("shEmail"); $("#shTextL").textContent = U("shText");
+  $("#shCopyL").textContent = U("shCopy"); $("#shMoreL").textContent = U("shMore");
+  $("#shareCancel").textContent = U("close");
+  $("#signinTitle").textContent = U("signinTitle"); $("#signinLabel").textContent = U("signinLabel");
+  $("#signinGo").textContent = U("signinGo"); $("#langLabel").textContent = U("langLabel");
+  document.documentElement.lang = lang === "to" ? "to" : "en";
+  setSyncLabel();
+  renderSchedule(); renderSW();
+}
+$("#langBtn").addEventListener("click",()=>{ lang = lang==="en" ? "to" : "en"; localStorage.setItem("r24-lang",lang); applyLang(); });
+
+// ---- Savior's Way ----
 function renderSW(){
   $("#swWrap").innerHTML = SAVIORS_WAY.map(grp=>{
+    const partTitle = lang==="to" ? (grp.partTo||grp.part) : grp.part;
     const head = `<div class="divider"><svg class="fd" viewBox="0 0 240 400"><use href="#feather"/></svg></div>
-      <div style="margin:0 2px 12px;"><p class="part-head">${esc(grp.part)}</p>${grp.tongan?`<p class="part-tongan">${esc(grp.tongan)}</p>`:""}</div>`;
-    const cards = grp.items.map(it=>`
-      <div class="sec-card">
-        <h4>${esc(it.t)}</h4>
-        <p>${esc(it.s)}</p>
-        <a class="read-link" href="${it.url||MANUAL_URL}" target="_blank" rel="noopener">Read on Gospel Library ${linkIcon}</a>
-      </div>`).join("");
+      <div style="margin:0 2px 12px;"><p class="part-head">${esc(partTitle)}</p>${grp.tongan&&lang==="en"?`<p class="part-tongan">${esc(grp.tongan)}</p>`:""}</div>`;
+    const cards = grp.items.map(it=>{
+      const title = lang==="to" ? (it.tTo||it.t) : it.t;
+      const summ  = lang==="to" ? (it.sTo||it.s) : it.s;
+      return `<div class="sec-card"><h4>${esc(title)}</h4><p>${esc(summ)}</p>
+        <a class="read-link" href="${it.url||MANUAL_URL}" target="_blank" rel="noopener">${U("readGL")} ${linkIcon}</a></div>`;
+    }).join("");
     return head+cards;
   }).join("");
 }
 
 // ---- storage ----
-const LS_KEY = "riverton24-eq-schedule-v2";
+const LS_KEY = "riverton24-eq-schedule-v3";
 let schedule = [], editing = false, editId = null, remote = null;
-function setSync(live){ $("#syncDot").classList.toggle("live",live);
-  $("#syncLabel").textContent = live ? "Synced — everyone sees the latest" : "Saved on this device"; }
+function setSyncLabel(){ $("#syncLabel").textContent = remote ? U("synced") : U("saved"); }
+function setSync(live){ $("#syncDot").classList.toggle("live",live); setSyncLabel(); }
 
 async function initStore(){
   if (FIREBASE_CONFIG && FIREBASE_CONFIG.projectId){
@@ -522,11 +552,11 @@ async function initStore(){
       const { getFirestore, doc, getDoc, setDoc, onSnapshot } =
         await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
       const db = getFirestore(initializeApp(FIREBASE_CONFIG));
-      const ref = doc(db, "eq", "riverton24");
+      const ref = doc(db, "eq", "r24-2026");
       const snap = await getDoc(ref);
       schedule = snap.exists() ? (snap.data().weeks || []) : SEED.slice();
       if (!snap.exists()) await setDoc(ref, { weeks: schedule });
-      onSnapshot(ref, s => { if (s.exists()){ schedule = s.data().weeks || []; render(); } });
+      onSnapshot(ref, s => { if (s.exists()){ schedule = s.data().weeks || []; renderSchedule(); } });
       remote = { save: arr => setDoc(ref, { weeks: arr }) };
       setSync(true); return;
     }catch(e){ console.warn("Firebase unavailable, using device storage.", e); }
@@ -540,60 +570,78 @@ async function persist(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify(schedule)); }catch{}
 }
 
-const avatarStyle = p => p ? `style="background-image:url('${encodeURI(p)}')"` : "";
-function render(){
-  const [first, ...rest] = schedule;
-  $("#featuredWrap").innerHTML = first ? `
-    <article class="featured">
-      <span class="featured__tag">This Sunday</span>
-      <p class="featured__date">${esc(first.date)}</p>
-      <h2 class="featured__title">${esc(first.title)||"To be announced"}</h2>
-      <p class="featured__src">${esc(first.src)}</p>
-      <div class="teacher">
-        <div class="avatar" ${avatarStyle(first.photo)}>${first.photo?"":initials(first.teacher)}</div>
-        <div class="teacher__meta"><b>${esc(first.teacher)||"To be assigned"}</b><span>Teaching</span></div>
+const bg = p => p ? `style="background-image:url('${encodeURI(p)}')"` : "";
+function renderSchedule(){
+  $("#schedWrap").innerHTML = schedule.map((w,i)=>{
+    const isNow = i===0;
+    const titleMain = lang==="to" ? (w.titleTo||w.title) : w.title;
+    const titleSub  = lang==="to" ? w.title : w.titleTo;
+    const quoteMain = lang==="to" ? (w.quoteTo||w.quote) : w.quote;
+    const quoteSub  = lang==="to" ? w.quote : w.quoteTo;
+    return `<article class="lcard ${isNow?'lcard--now':''}">
+      <div class="lcard__top">
+        <span class="datepill">Sun · ${esc(w.date)}</span>
+        ${isNow?`<span class="nowtag">${U("thisSunday")}</span>`:""}
       </div>
-      ${first.link?`<a class="material-link" href="${esc(first.link)}" target="_blank" rel="noopener">${linkIcon} Open lesson material</a>`:""}
-      ${editing?`<div><button class="btn btn--ghost" style="margin-top:14px;font-size:12px;padding:7px 12px;" data-edit="${first.id}">Edit this week</button></div>`:""}
-    </article>` : `<p class="sw-intro">No lessons scheduled yet.</p>`;
-
-  $("#upcomingWrap").innerHTML = rest.length ? rest.map(w=>`
-    <div class="week">
-      <div class="week__date"><b>${(w.date||"").replace(/^\D*/,"")||"•"}</b><span>${(w.date||"").replace(/[\d ].*$/,"")||""}</span></div>
-      <div class="week__body">
-        <p class="week__title">${esc(w.title)||"To be announced"}</p>
-        <p class="week__src">${esc(w.src)}</p>
-        <div class="week__who">
-          <span class="chip" ${avatarStyle(w.photo)}>${w.photo?"":initials(w.teacher)}</span>
-          <span class="week__name">${esc(w.teacher)||"To be assigned"}</span>
-          ${w.link?`<a class="week__link" href="${esc(w.link)}" target="_blank" rel="noopener" aria-label="Open material">${linkIcon}</a>`:""}
+      <div class="lcard__body">
+        <div class="lcard__avatar" ${bg(w.photo)}>${w.photo?"":initials(w.speaker)}</div>
+        <div class="lcard__main">
+          <h3 class="lcard__title">${esc(titleMain)||"—"}</h3>
+          ${titleSub?`<p class="lcard__title2">${esc(titleSub)}</p>`:""}
+          ${quoteMain?`<p class="lcard__quote">“${esc(quoteMain)}”</p>`:""}
+          ${quoteSub?`<p class="lcard__quote2">${esc(quoteSub)}</p>`:""}
+          ${w.speaker?`<p class="lcard__speaker"><b>${esc(w.speaker)}</b>${w.role?` · ${esc(w.role)}`:""}</p>`:""}
         </div>
       </div>
-      ${editing?`<button class="week__edit" data-edit="${w.id}" aria-label="Edit">✎</button>`:""}
-    </div>`).join("") : `<p class="week__src" style="padding:8px 4px;">Nothing further scheduled.</p>`;
-
+      <div class="lcard__foot">
+        ${capIcon}<span class="taught-label">${U("taughtBy")}</span><span class="taught-name">${esc(w.teacher)||"—"}</span>
+        <span class="foot-right">
+          ${w.link?`<a class="lcard__open" href="${esc(w.link)}" target="_blank" rel="noopener">${linkIcon} ${U("openMaterial")}</a>`:""}
+          ${editing?`<button class="lcard__edit" data-edit="${w.id}" aria-label="Edit">✎</button>`:""}
+        </span>
+      </div>
+    </article>`;
+  }).join("");
   document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>openModal(b.getAttribute("data-edit"))));
 }
 
-// ---- edit ----
-$("#editToggle").addEventListener("click",()=>{
-  if (!editing){ const code = prompt("Instructor passcode:");
-    if (code !== EDIT_PASSCODE){ if(code!==null) alert("Incorrect passcode."); return; } }
-  editing = !editing;
-  $("#editToggle").textContent = editing ? "Done editing" : "Instructor edit";
+// ---- editor sign-in ----
+const signinModal = $("#signinModal");
+let signedIn = sessionStorage.getItem("r24-editor")==="1";
+function refreshAdminBar(){
+  $("#editToggle").textContent = editing ? U("editDone") : U("editToggle");
   $("#addWeekBtn").style.display = editing ? "inline-block" : "none";
   $("#editNote").style.display = editing ? "inline" : "none";
-  render();
+  $("#signoutBtn").style.display = signedIn ? "inline-block" : "none";
+}
+$("#editToggle").addEventListener("click",()=>{
+  if (!signedIn){ openSignin(); return; }
+  editing = !editing; refreshAdminBar(); renderSchedule();
 });
+function openSignin(){ $("#fPass").value=""; $("#signinError").style.display="none"; signinModal.classList.add("on"); setTimeout(()=>$("#fPass").focus(),50); }
+function closeSignin(){ signinModal.classList.remove("on"); }
+function trySignin(){
+  if ($("#fPass").value === EDIT_PASSCODE){
+    signedIn = true; sessionStorage.setItem("r24-editor","1"); closeSignin();
+    editing = true; refreshAdminBar(); renderSchedule();
+  } else { $("#signinError").style.display="block"; }
+}
+$("#signinGo").addEventListener("click",trySignin);
+$("#fPass").addEventListener("keydown",e=>{ if(e.key==="Enter") trySignin(); });
+$("#signinCancel").addEventListener("click",closeSignin);
+$("#signinScrim").addEventListener("click",closeSignin);
+$("#signoutBtn").addEventListener("click",()=>{ signedIn=false; editing=false; sessionStorage.removeItem("r24-editor"); refreshAdminBar(); renderSchedule(); });
 $("#addWeekBtn").addEventListener("click",()=>openModal(null));
 
+// ---- edit modal ----
 const modal = $("#modal");
 function openModal(id){
   editId = id;
-  const w = id ? schedule.find(x=>x.id===id) : { date:"",title:"",src:"",teacher:"",photo:"",link:"" };
-  $("#modalTitle").textContent = id ? "Edit lesson" : "Add a week";
-  $("#fDate").value=w.date||""; $("#fTitle").value=w.title||""; $("#fSrc").value=w.src||"";
-  $("#fTeacher").value=w.teacher||""; $("#fPhoto").value=w.photo||""; $("#fLink").value=w.link||"";
+  const w = id ? schedule.find(x=>x.id===id) : {date:"",title:"",titleTo:"",quote:"",quoteTo:"",speaker:"",role:"",teacher:"",photo:"",link:""};
+  $("#modalTitle").textContent = id ? "Edit lesson" : "Add a lesson";
+  $("#fDate").value=w.date||""; $("#fTitle").value=w.title||""; $("#fTitleTo").value=w.titleTo||"";
+  $("#fSpeaker").value=w.speaker||""; $("#fRole").value=w.role||""; $("#fPhoto").value=w.photo||"";
+  $("#fQuote").value=w.quote||""; $("#fQuoteTo").value=w.quoteTo||""; $("#fLink").value=w.link||""; $("#fTeacher").value=w.teacher||"";
   $("#deleteBtn").style.display = id ? "block" : "none";
   modal.classList.add("on"); setTimeout(()=>$("#fDate").focus(),50);
 }
@@ -601,26 +649,25 @@ function closeModal(){ modal.classList.remove("on"); editId=null; }
 $("#cancelBtn").addEventListener("click",closeModal);
 $("#modalScrim").addEventListener("click",closeModal);
 $("#saveBtn").addEventListener("click",async()=>{
-  const data = { date:$("#fDate").value.trim(), title:$("#fTitle").value.trim(), src:$("#fSrc").value.trim(),
-    teacher:$("#fTeacher").value.trim(), photo:$("#fPhoto").value.trim(), link:$("#fLink").value.trim() };
+  const data = { date:$("#fDate").value.trim(), title:$("#fTitle").value.trim(), titleTo:$("#fTitleTo").value.trim(),
+    speaker:$("#fSpeaker").value.trim(), role:$("#fRole").value.trim(), photo:$("#fPhoto").value.trim(),
+    quote:$("#fQuote").value.trim(), quoteTo:$("#fQuoteTo").value.trim(), link:$("#fLink").value.trim(), teacher:$("#fTeacher").value.trim() };
   if (editId){ Object.assign(schedule.find(x=>x.id===editId), data); }
   else { schedule.push({ id:"w"+Date.now(), ...data }); }
-  await persist(); render(); closeModal();
+  await persist(); renderSchedule(); closeModal();
 });
 $("#deleteBtn").addEventListener("click",async()=>{
   if (!editId) return;
-  if (!confirm("Remove this week from the schedule?")) return;
+  if (!confirm("Remove this lesson?")) return;
   schedule = schedule.filter(x=>x.id!==editId);
-  await persist(); render(); closeModal();
+  await persist(); renderSchedule(); closeModal();
 });
 
 // ---- share ----
 let toastTimer;
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on");
-  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("on"),2200); }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("on"),2200); }
 const shareModal = $("#shareModal");
-const shareData = ()=>({ title:`${QUORUM.name} · EQ Instructor Guide`,
-  text:`${QUORUM.name} — lesson schedule & Teaching in the Savior's Way`, url:location.href });
+const shareData = ()=>({ title:`${QUORUM.name} · EQ Instructor Guide`, text:`${QUORUM.name} — lesson schedule & Teaching in the Savior's Way`, url:location.href });
 function openShare(){
   const d = shareData();
   $("#shEmail").href = `mailto:?subject=${encodeURIComponent(d.title)}&body=${encodeURIComponent(d.text+"\n\n"+d.url)}`;
@@ -632,24 +679,18 @@ function closeShare(){ shareModal.classList.remove("on"); }
 $("#shareBtn").addEventListener("click",openShare);
 $("#shareScrim").addEventListener("click",closeShare);
 $("#shareCancel").addEventListener("click",closeShare);
-$("#shCopy").addEventListener("click",async()=>{
-  try{ await navigator.clipboard.writeText(location.href); toast("Link copied"); }
-  catch{ prompt("Copy this link:", location.href); }
-  closeShare();
-});
-$("#shMore").addEventListener("click",async()=>{
-  if (navigator.share){ try{ await navigator.share(shareData()); }catch(e){} }
-  closeShare();
-});
+$("#shCopy").addEventListener("click",async()=>{ try{ await navigator.clipboard.writeText(location.href); toast(U("copied")); }catch{ prompt("Copy this link:", location.href); } closeShare(); });
+$("#shMore").addEventListener("click",async()=>{ if(navigator.share){ try{ await navigator.share(shareData()); }catch(e){} } closeShare(); });
 $("#shEmail").addEventListener("click",closeShare);
 $("#shText").addEventListener("click",closeShare);
 
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(modal.classList.contains("on"))closeModal(); if(shareModal.classList.contains("on"))closeShare(); }});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ [modal,shareModal,signinModal].forEach(m=>m.classList.remove("on")); }});
 
 // ---- go ----
-renderSW();
+$("#manualCta").href = MANUAL_URL;
 await initStore();
-render();
+refreshAdminBar();
+applyLang();   // sets all chrome + renders schedule + SW
 </script>
 </body>
 </html>
