@@ -540,6 +540,7 @@ const UI = {
   signinGo:{en:"Sign in", to:"Hū"}, langLabel:{en:"Lea faka-Tonga", to:"English"},
   copied:{en:"Link copied", to:"Kuo hiki ʻa e linké"},
   saveFail:{en:"Save failed — image may be too large", to:"Naʻe ʻikai lava ʻo tauhi — ʻoku fuʻu lahi nai ʻa e ʻimisí"},
+  uploading:{en:"Uploading photo…", to:"ʻOku ʻohake ʻa e ʻimisí…"},
 };
 
 /* ===================== APP ===================== */
@@ -606,7 +607,7 @@ function renderSW(){
 
 // ---- storage ----
 const LS_KEY = "riverton24-eq-v4";
-let schedule = [], media = { heroPhoto:"", saviorPhoto:"" }, editing = false, editId = null, remote = null;
+let schedule = [], media = { heroPhoto:"", saviorPhoto:"" }, editing = false, editId = null, remote = null, storage = null, sApi = null, pendingId = null;
 function setSyncLabel(){ $("#syncLabel").textContent = remote ? U("synced") : U("saved"); }
 function setSync(live){ $("#syncDot").classList.toggle("live",live); setSyncLabel(); }
 
@@ -616,7 +617,10 @@ async function initStore(){
       const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
       const { getFirestore, doc, getDoc, setDoc, onSnapshot } =
         await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-      const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+      const app = initializeApp(FIREBASE_CONFIG);
+      const db = getFirestore(app);
+      try{ sApi = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"); storage = sApi.getStorage(app); }
+      catch(e){ console.warn("Storage SDK unavailable", e); }
       const ref = doc(db, "eq", "r24-2026");
       const snap = await getDoc(ref);
       if (snap.exists()){ const d=snap.data(); schedule=d.weeks||[]; media=d.media||media; }
@@ -724,7 +728,7 @@ function showModalPhoto(){
   else { prev.style.backgroundImage=""; prev.textContent="No photo"; $("#photoClearBtn").style.display="none"; }
 }
 function openModal(id){
-  editId = id;
+  editId = id; pendingId = id ? null : ("w"+Date.now());
   const w = id ? schedule.find(x=>x.id===id) : {date:"",title:"",titleTo:"",quote:"",quoteTo:"",speaker:"",role:"",teacher:"",photo:"",link:""};
   $("#modalTitle").textContent = id ? "Edit lesson" : "Add a lesson";
   $("#modalContext").innerHTML = id ? `<b>${esc(w.title)||"(untitled)"}</b>${w.speaker?" · "+esc(w.speaker):""}<br>${esc(w.date)}` : "New lesson — fill in the details below.";
@@ -747,12 +751,19 @@ $("#photoClearBtn").addEventListener("click",()=>{ modalPhoto=""; showModalPhoto
 $("#cancelBtn").addEventListener("click",closeModal);
 $("#modalScrim").addEventListener("click",closeModal);
 $("#saveBtn").addEventListener("click",async()=>{
-  const data = { date:$("#fDate").value.trim(), title:$("#fTitle").value.trim(), titleTo:$("#fTitleTo").value.trim(),
-    speaker:$("#fSpeaker").value.trim(), role:$("#fRole").value.trim(), photo:modalPhoto,
-    quote:$("#fQuote").value.trim(), quoteTo:$("#fQuoteTo").value.trim(), link:$("#fLink").value.trim(), teacher:$("#fTeacher").value.trim() };
-  if (editId){ Object.assign(schedule.find(x=>x.id===editId), data); }
-  else { schedule.push({ id:"w"+Date.now(), ...data }); }
-  await persist(); renderSchedule(); closeModal();
+  const btn=$("#saveBtn"); const key = editId || pendingId || ("w"+Date.now());
+  btn.disabled=true; btn.textContent="Saving…";
+  try{
+    let photoVal = modalPhoto;
+    if (photoVal && photoVal.startsWith("data:")){ photoVal = await storeImage(`r24/speakers/${key}.jpg`, photoVal); }
+    const data = { date:$("#fDate").value.trim(), title:$("#fTitle").value.trim(), titleTo:$("#fTitleTo").value.trim(),
+      speaker:$("#fSpeaker").value.trim(), role:$("#fRole").value.trim(), photo:photoVal,
+      quote:$("#fQuote").value.trim(), quoteTo:$("#fQuoteTo").value.trim(), link:$("#fLink").value.trim(), teacher:$("#fTeacher").value.trim() };
+    if (editId){ Object.assign(schedule.find(x=>x.id===editId), data); }
+    else { schedule.push({ id:key, ...data }); }
+    await persist(); renderSchedule(); closeModal();
+  }catch(e){ console.warn(e); toast(U("saveFail")); }
+  finally{ btn.disabled=false; btn.textContent="Save"; }
 });
 $("#deleteBtn").addEventListener("click",async()=>{
   if (!editId) return;
@@ -775,13 +786,24 @@ function processImage(file, maxDim, q){
     reader.onerror=reject; reader.readAsDataURL(file);
   });
 }
+// Upload to Firebase Storage and return a short download URL; if Storage isn't available, keep the data URL inline.
+async function storeImage(path, dataUrl){
+  if (storage && sApi){
+    try{
+      const r = sApi.ref(storage, path);
+      await sApi.uploadString(r, dataUrl, "data_url");
+      return await sApi.getDownloadURL(r);
+    }catch(e){ console.warn("Storage upload failed; embedding inline.", e); }
+  }
+  return dataUrl;
+}
 $("#heroPhotoPick").addEventListener("click",()=>$("#heroFile").click());
 $("#heroFile").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return;
-  try{ media.heroPhoto = await processImage(f,1000,0.72); await persist(); applyMedia(); }catch{ toast(U("saveFail")); } e.target.value=""; });
+  toast(U("uploading")); try{ const d=await processImage(f,1400,0.8); media.heroPhoto = await storeImage("r24/media/header.jpg", d); await persist(); applyMedia(); }catch{ toast(U("saveFail")); } e.target.value=""; });
 $("#heroPhotoRemove").addEventListener("click",async()=>{ media.heroPhoto=""; await persist(); applyMedia(); });
 $("#swPhoto").addEventListener("click",()=>{ if(signedIn) $("#swFile").click(); });
 $("#swFile").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return;
-  try{ media.saviorPhoto = await processImage(f,1000,0.72); await persist(); applyMedia(); }catch{ toast(U("saveFail")); } e.target.value=""; });
+  toast(U("uploading")); try{ const d=await processImage(f,1400,0.8); media.saviorPhoto = await storeImage("r24/media/savior.jpg", d); await persist(); applyMedia(); }catch{ toast(U("saveFail")); } e.target.value=""; });
 $("#swPhotoRemove").addEventListener("click",async ev=>{ ev.stopPropagation(); media.saviorPhoto=""; await persist(); applyMedia(); });
 
 // ---- share ----
