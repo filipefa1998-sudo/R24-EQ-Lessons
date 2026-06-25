@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Riverton 24th · Elders Quorum Instructor Guide</title>
+<meta name="theme-color" content="#1c150e" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     NGATU — ink on barkcloth (professional, near-monochrome)
+     paper  #e9ddc2  tapa ground   ·  card #f4ebd7 lighter cloth
+     ink    #221a12  candlenut soot ·  garnet #7c2230 koka accent
+     gold   #9c7a3c  aged brass (hairlines / crest)
+     ============================================================ */
+  :root{
+    --paper:#e9ddc2; --paper-2:#e1d2b2; --card:#f4ebd7; --card-2:#efe4cc;
+    --ink:#221a12; --ink-2:#3a2e20; --muted:#6f6047; --muted-2:#8c7c60;
+    --garnet:#7c2230; --garnet-deep:#5e1824; --gold:#9c7a3c; --gold-soft:#c2a96f;
+    --line:rgba(34,26,18,.14); --line-strong:rgba(34,26,18,.22);
+    --radius:14px; --shadow:0 18px 38px -24px rgba(34,26,18,.55); --maxw:560px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.55;min-height:100vh;}
+  .app{max-width:var(--maxw);margin:0 auto;min-height:100vh;background:var(--paper);
+    box-shadow:0 0 60px -30px rgba(0,0,0,.4);}
+
+  /* hidden SVG defs (feather symbol) */
+  .defs{position:absolute;width:0;height:0;overflow:hidden;}
+
+  /* pinwheel ngatu band */
+  .band{height:18px;width:100%;border-top:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);
+    background:var(--paper-2) url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='36'%20height='36'%20viewBox='0%200%2036%2036'%3E%3Crect%20width='36'%20height='36'%20fill='transparent'/%3E%3Cpolygon%20points='18,0%2018,18%200,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='36,18%2018,18%2036,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='0,18%2018,18%200,36'%20fill='%231f1813'/%3E%3Cpolygon%20points='18,36%2018,18%2036,36'%20fill='%231f1813'/%3E%3C/svg%3E");background-repeat:repeat-x;background-position:center;background-size:auto 18px;}
+
+  /* ---------- header ---------- */
+  header.hero{position:relative;background:linear-gradient(168deg,#2c2114 0%,#1a130c 100%);
+    padding:calc(env(safe-area-inset-top) + 26px) 22px 24px;text-align:center;overflow:hidden;}
+  .hero__wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);width:330px;height:auto;
+    color:var(--gold);opacity:.10;pointer-events:none;}
+  .hero__photo{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;
+    transition:opacity .6s;mix-blend-mode:soft-light;}
+  .hero__photo.on{opacity:.4;}
+  .hero__inner{position:relative;}
+  .crest{width:50px;height:84px;margin:0 auto 10px;display:block;color:var(--gold-soft);}
+  .hero__eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-soft);font-weight:600;margin:0 0 6px;}
+  .hero__title{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(24px,6.4vw,31px);line-height:1.12;margin:0;color:#f4ebd7;}
+  .hero__tongan{font-family:"Playfair Display",serif;font-style:italic;font-weight:500;color:var(--gold-soft);font-size:15px;margin:6px 0 0;}
+  .hero__share{position:absolute;top:calc(env(safe-area-inset-top) + 14px);right:14px;z-index:5;
+    width:38px;height:38px;border-radius:50%;border:1px solid rgba(194,169,111,.4);background:rgba(244,235,215,.06);
+    color:var(--gold-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;}
+  .hero__share:hover{background:rgba(244,235,215,.14);}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;gap:8px;max-width:var(--maxw);margin:0 auto;padding:16px 18px 6px;
+    position:sticky;top:0;z-index:30;background:linear-gradient(180deg,var(--paper) 74%,transparent);}
+  .tab{flex:1;appearance:none;border:1px solid var(--line-strong);background:var(--card);color:var(--muted);
+    font-family:"Manrope",sans-serif;font-weight:600;font-size:13.5px;padding:11px 10px;border-radius:11px;
+    cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .tab small{font-style:italic;font-weight:500;font-size:10.5px;color:var(--muted-2);}
+  .tab[aria-selected="true"]{background:var(--garnet);border-color:var(--garnet);color:#f4ebd7;box-shadow:0 8px 18px -10px rgba(124,34,48,.7);}
+  .tab[aria-selected="true"] small{color:rgba(244,235,215,.78);}
+  .tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  .panel{padding:8px 18px 0;display:none;animation:rise .35s ease;}
+  .panel.on{display:block;}
+  @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  /* feather divider */
+  .divider{display:flex;align-items:center;gap:14px;margin:26px 4px 14px;color:var(--gold);}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);}
+  .divider .fd{width:22px;height:38px;color:var(--gold);flex:0 0 auto;}
+  .divider__label{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);font-weight:700;}
+
+  .section-label{display:flex;align-items:center;gap:10px;margin:22px 2px 12px;font-size:11px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);font-weight:700;}
+  .section-label::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* cadence note */
+  .cadence{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
+    border-left:3px solid var(--gold);border-radius:11px;padding:11px 14px;margin:4px 2px 0;font-size:13px;color:var(--muted);}
+  .cadence b{color:var(--garnet);font-weight:700;}
+
+  /* featured "this Sunday" */
+  .featured{position:relative;background:var(--card);color:var(--ink);border:1px solid var(--line);
+    border-radius:var(--radius);padding:20px 20px 22px;box-shadow:var(--shadow);overflow:hidden;}
+  .featured::before{content:"";position:absolute;top:-10px;right:-10px;width:96px;height:96px;opacity:.10;
+    background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='36'%20height='36'%20viewBox='0%200%2036%2036'%3E%3Crect%20width='36'%20height='36'%20fill='transparent'/%3E%3Cpolygon%20points='18,0%2018,18%200,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='36,18%2018,18%2036,0'%20fill='%231f1813'/%3E%3Cpolygon%20points='0,18%2018,18%200,36'%20fill='%231f1813'/%3E%3Cpolygon%20points='18,36%2018,18%2036,36'%20fill='%231f1813'/%3E%3C/svg%3E");background-size:24px;}
+  .featured__tag{display:inline-block;background:var(--garnet);color:#f4ebd7;font-size:10.5px;font-weight:800;
+    letter-spacing:.16em;text-transform:uppercase;padding:5px 11px;border-radius:20px;margin-bottom:12px;}
+  .featured__date{font-size:12.5px;font-weight:700;color:var(--garnet);letter-spacing:.04em;margin:0 0 4px;}
+  .featured__title{font-family:"Playfair Display",serif;font-weight:700;font-size:23px;line-height:1.2;margin:0 0 6px;color:var(--ink);}
+  .featured__src{font-size:13px;color:var(--muted);margin:0 0 16px;}
+  .teacher{display:flex;align-items:center;gap:11px;}
+  .avatar{width:44px;height:44px;border-radius:50%;flex:0 0 auto;background:var(--garnet);background-size:cover;
+    background-position:center;display:flex;align-items:center;justify-content:center;color:#f4ebd7;font-weight:800;
+    font-size:15px;box-shadow:inset 0 0 0 2px rgba(156,122,60,.5);}
+  .teacher__meta b{display:block;font-size:14.5px;color:var(--ink);}
+  .teacher__meta span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);}
+  .material-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;font-weight:700;
+    color:var(--garnet);text-decoration:none;border:1px solid var(--line-strong);padding:8px 13px;border-radius:9px;background:var(--card-2);}
+  .material-link:hover{border-color:var(--garnet);}
+
+  /* upcoming list */
+  .week{display:flex;gap:14px;align-items:center;padding:15px 4px;border-bottom:1px solid var(--line);}
+  .week:last-child{border-bottom:none;}
+  .week__date{flex:0 0 54px;text-align:center;border-right:1px solid var(--line-strong);padding-right:12px;}
+  .week__date b{display:block;font-family:"Playfair Display",serif;font-size:22px;line-height:1;color:var(--garnet);}
+  .week__date span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);}
+  .week__body{flex:1;min-width:0;}
+  .week__title{font-weight:600;font-size:15px;color:var(--ink);margin:0 0 2px;}
+  .week__src{font-size:12px;color:var(--muted-2);margin:0;}
+  .week__who{display:flex;align-items:center;gap:7px;margin-top:6px;}
+  .chip{width:26px;height:26px;border-radius:50%;background:var(--card-2);border:1px solid var(--gold);background-size:cover;
+    background-position:center;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--garnet);}
+  .week__name{font-size:12.5px;color:var(--muted);}
+  .week__link{margin-left:6px;color:var(--garnet);display:inline-flex;}
+  .week__edit{margin-left:auto;background:none;border:none;color:var(--muted-2);cursor:pointer;font-size:18px;padding:4px;}
+  .week__edit:hover{color:var(--garnet);}
+
+  /* Savior's Way */
+  .sw-intro{color:var(--muted);font-size:15px;margin:4px 2px 8px;}
+  .sw-photo{height:160px;border-radius:var(--radius);margin:16px 0 4px;overflow:hidden;position:relative;
+    background:var(--card-2);background-size:cover;background-position:center;border:1px solid var(--line);}
+  .sw-photo .ph-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--muted-2);font-size:12px;padding:20px;}
+  .sw-photo code{color:var(--garnet);}
+  .part-head{font-family:"Playfair Display",serif;font-weight:600;font-size:18px;color:var(--ink);margin:0;}
+  .part-tongan{font-style:italic;color:var(--gold);font-size:12.5px;margin:2px 0 0;}
+  .sec-card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;
+    padding:14px 16px;margin-bottom:11px;box-shadow:0 6px 16px -16px rgba(0,0,0,.5);}
+  .sec-card h4{font-family:"Playfair Display",serif;font-weight:600;font-size:16px;margin:0 0 4px;color:var(--ink);}
+  .sec-card p{margin:0 0 10px;color:var(--muted);font-size:13.5px;}
+  .read-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--garnet);
+    text-decoration:none;letter-spacing:.02em;}
+  .read-link:hover{text-decoration:underline;}
+  blockquote.scripture{margin:18px 2px;padding:16px 18px;border-radius:12px;
+    background:linear-gradient(180deg,rgba(124,34,48,.07),rgba(124,34,48,.02));border:1px solid rgba(124,34,48,.2);}
+  blockquote.scripture p{margin:0 0 6px;font-family:"Playfair Display",serif;font-style:italic;font-size:16px;color:var(--ink);}
+  blockquote.scripture cite{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--garnet);font-style:normal;}
+  .manual-cta{display:block;text-align:center;background:var(--ink);color:#f4ebd7;text-decoration:none;font-weight:700;
+    font-size:14px;border-radius:12px;padding:15px;margin:18px 2px 6px;letter-spacing:.02em;}
+  .manual-cta:hover{background:var(--ink-2);}
+
+  /* edit affordances */
+  .admin-bar{display:flex;gap:8px;align-items:center;margin:22px 2px 6px;flex-wrap:wrap;}
+  .btn{appearance:none;cursor:pointer;font-family:"Manrope",sans-serif;font-weight:600;font-size:13px;border-radius:10px;
+    padding:10px 15px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);transition:.2s;}
+  .btn:hover{border-color:var(--garnet);}
+  .btn--garnet{background:var(--garnet);border-color:var(--garnet);color:#f4ebd7;}
+  .btn--ghost{background:transparent;}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .editing-note{font-size:12px;color:var(--garnet);}
+
+  /* modal / sheet */
+  .modal{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;}
+  .modal.on{display:flex;}
+  .modal__scrim{position:absolute;inset:0;background:rgba(28,18,10,.55);backdrop-filter:blur(3px);}
+  .modal__card{position:relative;width:100%;max-width:var(--maxw);background:var(--card);border:1px solid var(--line-strong);
+    border-radius:18px 18px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom) + 22px);max-height:86vh;overflow:auto;
+    box-shadow:0 -20px 50px -20px rgba(0,0,0,.45);animation:rise .3s ease;}
+  .modal__card h2{font-family:"Playfair Display",serif;font-size:20px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:13px;}
+  .field label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:5px;}
+  .field input{width:100%;background:var(--paper);border:1px solid var(--line-strong);color:var(--ink);border-radius:10px;
+    padding:11px 12px;font-size:15px;font-family:inherit;}
+  .field input:focus{outline:none;border-color:var(--garnet);}
+  .field .hint{font-size:11px;color:var(--muted-2);margin-top:4px;}
+  .modal__row{display:flex;gap:10px;margin-top:8px;}
+  .modal__row .btn{flex:1;}
+  .delete-link{background:none;border:none;color:var(--garnet);font-size:13px;cursor:pointer;margin-top:10px;padding:4px;}
+
+  /* share sheet */
+  .share-list{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
+  .share-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:12px;
+    background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;cursor:pointer;}
+  .share-item:hover{border-color:var(--garnet);}
+  .share-item svg{color:var(--garnet);flex:0 0 auto;}
+
+  footer.tag{text-align:center;color:var(--muted-2);font-size:11px;padding:28px 20px 14px;}
+  footer.tag .mark{color:var(--garnet);}
+  .sync-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted-2);margin-right:5px;vertical-align:middle;}
+  .sync-dot.live{background:#5b7d3f;}
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#f4ebd7;
+    padding:11px 18px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:80;}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;}}
+</style>
+</head>
+<body>
+
+<!-- feather kupesi symbol (reused as crest, dividers, watermark) -->
+<svg class="defs" aria-hidden="true"><symbol id="feather" viewBox="0 0 240 400">
+<polygon points="120,0 240,200 120,400 0,200" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+<line x1="120" y1="6" x2="120" y2="394" stroke="currentColor" stroke-width="2.0"/>
+<line x1="6" y1="200" x2="234" y2="200" stroke="currentColor" stroke-width="1.6"/>
+<path d="M120.0,183.3 Q94.5,142.8 53.8,101.1 Q85.9,149.8 120.0,183.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,166.7 Q96.6,129.9 58.7,92.8 Q88.2,136.9 120.0,166.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,150.0 Q98.8,117.0 63.9,84.3 Q90.7,123.9 120.0,150.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,133.3 Q101.1,103.9 69.3,75.7 Q93.3,110.8 120.0,133.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,116.7 Q103.5,90.8 74.9,66.9 Q95.9,97.7 120.0,116.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,100.0 Q106.0,77.7 80.7,57.9 Q98.7,84.4 120.0,100.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,83.3 Q108.5,64.4 86.8,48.7 Q101.5,71.1 120.0,83.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,66.7 Q111.2,51.1 93.0,39.4 Q104.5,57.7 120.0,66.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,50.0 Q114.0,37.6 99.5,29.8 Q107.5,44.2 120.0,50.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,33.3 Q116.9,24.1 106.1,20.1 Q110.6,30.6 120.0,33.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,16.7 Q119.8,10.5 113.0,10.1 Q113.9,16.9 120.0,16.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,183.3 Q154.1,149.8 186.2,101.1 Q145.5,142.8 120.0,183.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,166.7 Q151.8,136.9 181.3,92.8 Q143.4,129.9 120.0,166.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,150.0 Q149.3,123.9 176.1,84.3 Q141.2,117.0 120.0,150.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,133.3 Q146.7,110.8 170.7,75.7 Q138.9,103.9 120.0,133.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,116.7 Q144.1,97.7 165.1,66.9 Q136.5,90.8 120.0,116.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,100.0 Q141.3,84.4 159.3,57.9 Q134.0,77.7 120.0,100.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,83.3 Q138.5,71.1 153.2,48.7 Q131.5,64.4 120.0,83.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,66.7 Q135.5,57.7 147.0,39.4 Q128.8,51.1 120.0,66.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,50.0 Q132.5,44.2 140.5,29.8 Q126.0,37.6 120.0,50.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,33.3 Q129.4,30.6 133.9,20.1 Q123.1,24.1 120.0,33.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,16.7 Q126.1,16.9 127.0,10.1 Q120.2,10.5 120.0,16.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,216.7 Q85.9,250.2 53.8,298.9 Q94.5,257.2 120.0,216.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,233.3 Q88.2,263.1 58.7,307.2 Q96.6,270.1 120.0,233.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,250.0 Q90.7,276.1 63.9,315.7 Q98.8,283.0 120.0,250.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,266.7 Q93.3,289.2 69.3,324.3 Q101.1,296.1 120.0,266.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,283.3 Q95.9,302.3 74.9,333.1 Q103.5,309.2 120.0,283.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,300.0 Q98.7,315.6 80.7,342.1 Q106.0,322.3 120.0,300.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,316.7 Q101.5,328.9 86.8,351.3 Q108.5,335.6 120.0,316.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,333.3 Q104.5,342.3 93.0,360.6 Q111.2,348.9 120.0,333.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,350.0 Q107.5,355.8 99.5,370.2 Q114.0,362.4 120.0,350.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,366.7 Q110.6,369.4 106.1,379.9 Q116.9,375.9 120.0,366.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,383.3 Q113.9,383.1 113.0,389.9 Q119.8,389.5 120.0,383.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,216.7 Q145.5,257.2 186.2,298.9 Q154.1,250.2 120.0,216.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,233.3 Q143.4,270.1 181.3,307.2 Q151.8,263.1 120.0,233.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,250.0 Q141.2,283.0 176.1,315.7 Q149.3,276.1 120.0,250.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,266.7 Q138.9,296.1 170.7,324.3 Q146.7,289.2 120.0,266.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,283.3 Q136.5,309.2 165.1,333.1 Q144.1,302.3 120.0,283.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,300.0 Q134.0,322.3 159.3,342.1 Q141.3,315.6 120.0,300.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,316.7 Q131.5,335.6 153.2,351.3 Q138.5,328.9 120.0,316.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,333.3 Q128.8,348.9 147.0,360.6 Q135.5,342.3 120.0,333.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,350.0 Q126.0,362.4 140.5,370.2 Q132.5,355.8 120.0,350.0 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,366.7 Q123.1,375.9 133.9,379.9 Q129.4,369.4 120.0,366.7 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<path d="M120.0,383.3 Q120.2,389.5 127.0,389.9 Q126.1,383.1 120.0,383.3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+<line x1="127.5" y1="12.5" x2="127.0" y2="24.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="135.0" y1="25.0" x2="134.0" y2="37.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="142.5" y1="37.5" x2="140.9" y2="49.4" stroke="currentColor" stroke-width="1.0"/>
+<line x1="150.0" y1="50.0" x2="147.6" y2="61.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="157.5" y1="62.5" x2="154.3" y2="74.1" stroke="currentColor" stroke-width="1.0"/>
+<line x1="165.0" y1="75.0" x2="160.9" y2="86.3" stroke="currentColor" stroke-width="1.0"/>
+<line x1="172.5" y1="87.5" x2="167.4" y2="98.4" stroke="currentColor" stroke-width="1.0"/>
+<line x1="180.0" y1="100.0" x2="173.8" y2="110.3" stroke="currentColor" stroke-width="1.0"/>
+<line x1="187.5" y1="112.5" x2="180.2" y2="122.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="195.0" y1="125.0" x2="186.5" y2="133.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="202.5" y1="137.5" x2="192.9" y2="144.7" stroke="currentColor" stroke-width="1.0"/>
+<line x1="210.0" y1="150.0" x2="199.5" y2="155.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="217.5" y1="162.5" x2="206.3" y2="166.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="225.0" y1="175.0" x2="213.3" y2="177.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="232.5" y1="187.5" x2="220.6" y2="188.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="232.5" y1="212.5" x2="220.6" y2="211.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="225.0" y1="225.0" x2="213.3" y2="222.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="217.5" y1="237.5" x2="206.3" y2="233.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="210.0" y1="250.0" x2="199.5" y2="244.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="202.5" y1="262.5" x2="192.9" y2="255.3" stroke="currentColor" stroke-width="1.0"/>
+<line x1="195.0" y1="275.0" x2="186.5" y2="266.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="187.5" y1="287.5" x2="180.2" y2="278.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="180.0" y1="300.0" x2="173.8" y2="289.7" stroke="currentColor" stroke-width="1.0"/>
+<line x1="172.5" y1="312.5" x2="167.4" y2="301.6" stroke="currentColor" stroke-width="1.0"/>
+<line x1="165.0" y1="325.0" x2="160.9" y2="313.7" stroke="currentColor" stroke-width="1.0"/>
+<line x1="157.5" y1="337.5" x2="154.3" y2="325.9" stroke="currentColor" stroke-width="1.0"/>
+<line x1="150.0" y1="350.0" x2="147.6" y2="338.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="142.5" y1="362.5" x2="140.9" y2="350.6" stroke="currentColor" stroke-width="1.0"/>
+<line x1="135.0" y1="375.0" x2="134.0" y2="363.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="127.5" y1="387.5" x2="127.0" y2="375.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="112.5" y1="387.5" x2="113.0" y2="375.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="105.0" y1="375.0" x2="106.0" y2="363.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="97.5" y1="362.5" x2="99.1" y2="350.6" stroke="currentColor" stroke-width="1.0"/>
+<line x1="90.0" y1="350.0" x2="92.4" y2="338.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="82.5" y1="337.5" x2="85.7" y2="325.9" stroke="currentColor" stroke-width="1.0"/>
+<line x1="75.0" y1="325.0" x2="79.1" y2="313.7" stroke="currentColor" stroke-width="1.0"/>
+<line x1="67.5" y1="312.5" x2="72.6" y2="301.6" stroke="currentColor" stroke-width="1.0"/>
+<line x1="60.0" y1="300.0" x2="66.2" y2="289.7" stroke="currentColor" stroke-width="1.0"/>
+<line x1="52.5" y1="287.5" x2="59.8" y2="278.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="45.0" y1="275.0" x2="53.5" y2="266.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="37.5" y1="262.5" x2="47.1" y2="255.3" stroke="currentColor" stroke-width="1.0"/>
+<line x1="30.0" y1="250.0" x2="40.5" y2="244.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="22.5" y1="237.5" x2="33.7" y2="233.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="15.0" y1="225.0" x2="26.7" y2="222.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="7.5" y1="212.5" x2="19.4" y2="211.2" stroke="currentColor" stroke-width="1.0"/>
+<line x1="7.5" y1="187.5" x2="19.4" y2="188.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="15.0" y1="175.0" x2="26.7" y2="177.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="22.5" y1="162.5" x2="33.7" y2="166.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="30.0" y1="150.0" x2="40.5" y2="155.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="37.5" y1="137.5" x2="47.1" y2="144.7" stroke="currentColor" stroke-width="1.0"/>
+<line x1="45.0" y1="125.0" x2="53.5" y2="133.5" stroke="currentColor" stroke-width="1.0"/>
+<line x1="52.5" y1="112.5" x2="59.8" y2="122.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="60.0" y1="100.0" x2="66.2" y2="110.3" stroke="currentColor" stroke-width="1.0"/>
+<line x1="67.5" y1="87.5" x2="72.6" y2="98.4" stroke="currentColor" stroke-width="1.0"/>
+<line x1="75.0" y1="75.0" x2="79.1" y2="86.3" stroke="currentColor" stroke-width="1.0"/>
+<line x1="82.5" y1="62.5" x2="85.7" y2="74.1" stroke="currentColor" stroke-width="1.0"/>
+<line x1="90.0" y1="50.0" x2="92.4" y2="61.8" stroke="currentColor" stroke-width="1.0"/>
+<line x1="97.5" y1="37.5" x2="99.1" y2="49.4" stroke="currentColor" stroke-width="1.0"/>
+<line x1="105.0" y1="25.0" x2="106.0" y2="37.0" stroke="currentColor" stroke-width="1.0"/>
+<line x1="112.5" y1="12.5" x2="113.0" y2="24.5" stroke="currentColor" stroke-width="1.0"/>
+</symbol></svg>
+
+<div class="app">
+  <header class="hero">
+    <button class="hero__share" id="shareBtn" aria-label="Share">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+    </button>
+    <svg class="hero__wm" viewBox="0 0 240 400" aria-hidden="true"><use href="#feather"/></svg>
+    <div class="hero__photo" id="heroPhoto"></div>
+    <div class="hero__inner">
+      <svg class="crest" viewBox="0 0 240 400" aria-hidden="true"><use href="#feather"/></svg>
+      <p class="hero__eyebrow">Elders Quorum · Instructor Guide</p>
+      <h1 class="hero__title" id="quorumName">Riverton 24th Tongan Ward</h1>
+      <p class="hero__tongan" id="quorumTongan">Kōlomu ʻo e Kaumātuʻa</p>
+    </div>
+  </header>
+  <div class="band" aria-hidden="true"></div>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" id="tab-sched" role="tab" aria-selected="true" aria-controls="panel-sched">
+      Schedule <small>Lēsoni</small>
+    </button>
+    <button class="tab" id="tab-sw" role="tab" aria-selected="false" aria-controls="panel-sw">
+      The Savior's Way <small>Founga ʻa e Fakamoʻui</small>
+    </button>
+  </nav>
+
+  <!-- ===================== SCHEDULE ===================== -->
+  <section class="panel on" id="panel-sched" role="tabpanel" aria-labelledby="tab-sched">
+    <div class="cadence">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#9c7a3c" stroke-width="1.5"/><path d="M8 4.5V8l2.5 1.5" stroke="#9c7a3c" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>Lessons run <b>every two weeks</b> through August, then <b>weekly from September</b>.</span>
+    </div>
+
+    <div class="section-label">This Sunday</div>
+    <div id="featuredWrap"></div>
+
+    <div class="divider"><svg class="fd" viewBox="0 0 240 400"><use href="#feather"/></svg></div>
+    <div class="section-label">Coming up</div>
+    <div id="upcomingWrap"></div>
+
+    <div class="admin-bar">
+      <button class="btn btn--ghost" id="addWeekBtn" style="display:none;">+ Add a week</button>
+      <button class="btn btn--ghost" id="editToggle">Instructor edit</button>
+      <span class="editing-note" id="editNote" style="display:none;">Editing on — tap a card to change it</span>
+    </div>
+  </section>
+
+  <!-- ===================== SAVIOR'S WAY ===================== -->
+  <section class="panel" id="panel-sw" role="tabpanel" aria-labelledby="tab-sw">
+    <p class="sw-intro">The complete manual, divided by section. Tap <b>Read on Gospel Library</b> on any section to open the full, official text.</p>
+    <div class="sw-photo" id="swPhoto"><div class="ph-note">Add a photo here — the quorum, a temple, or Christ teaching.<br>Set <code>IMAGES.saviorPhoto</code> in the script.</div></div>
+
+    <blockquote class="scripture">
+      <p>"I am the way, the truth, and the life."</p>
+      <cite>John 14:6</cite>
+    </blockquote>
+
+    <div id="swWrap"></div>
+
+    <a class="manual-cta" id="manualCta" href="#" target="_blank" rel="noopener">Open the full manual on Gospel Library →</a>
+  </section>
+
+  <footer class="tag">
+    <span class="sync-dot" id="syncDot"></span><span id="syncLabel">Saved on this device</span>
+    <div style="margin-top:6px;">Made with <span class="mark">◆</span> for the quorum</div>
+  </footer>
+</div>
+
+<!-- ===================== EDIT MODAL ===================== -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal__scrim" id="modalScrim"></div>
+  <div class="modal__card">
+    <h2 id="modalTitle">Edit lesson</h2>
+    <div class="field"><label>Date (e.g. Jul 12)</label><input id="fDate" type="text" /></div>
+    <div class="field"><label>Lesson title</label><input id="fTitle" type="text" /></div>
+    <div class="field"><label>Source (e.g. Conference, April 2026 · Elder ___)</label><input id="fSrc" type="text" /></div>
+    <div class="field"><label>Teacher name</label><input id="fTeacher" type="text" /></div>
+    <div class="field"><label>Teacher photo URL</label><input id="fPhoto" type="url" placeholder="https://…" /><div class="hint">Paste an image link to show a profile photo. Leave blank for initials.</div></div>
+    <div class="field"><label>Lesson / talk link</label><input id="fLink" type="url" placeholder="https://…" /><div class="hint">Link to the Conference talk or Come, Follow Me material.</div></div>
+    <div class="modal__row">
+      <button class="btn btn--ghost" id="cancelBtn">Cancel</button>
+      <button class="btn btn--garnet" id="saveBtn">Save</button>
+    </div>
+    <button class="delete-link" id="deleteBtn" style="display:none;">Delete this week</button>
+  </div>
+</div>
+
+<!-- ===================== SHARE SHEET ===================== -->
+<div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+  <div class="modal__scrim" id="shareScrim"></div>
+  <div class="modal__card">
+    <h2 id="shareTitle">Share this guide</h2>
+    <div class="share-list">
+      <a class="share-item" id="shEmail"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a>
+      <a class="share-item" id="shText"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text message</a>
+      <div class="share-item" id="shCopy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy link</div>
+      <div class="share-item" id="shMore" style="display:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><line x1="8.2" y1="10.8" x2="15.8" y2="6.2"/><line x1="8.2" y1="13.2" x2="15.8" y2="17.8"/></svg>More sharing options…</div>
+    </div>
+    <div class="modal__row"><button class="btn btn--ghost" id="shareCancel" style="flex:1;">Close</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+/* =================================================================
+   CONFIG — edit these
+   ================================================================= */
+const QUORUM = { name: "Riverton 24th Tongan Ward", tongan: "Kōlomu ʻo e Kaumātuʻa" };
+const IMAGES = { headerPhoto: "", saviorPhoto: "" };
+const EDIT_PASSCODE = "2410";
+
+// Firebase (optional). Blank = saves on this device. Paste config to sync for everyone.
+const FIREBASE_CONFIG = { /* apiKey:"", authDomain:"", projectId:"", appId:"" */ };
+
+// Official manual (Gospel Library). Per-section URLs default here; paste exact deep links to refine.
+const MANUAL_URL = "https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022?lang=eng";
+
+// Starting schedule — biweekly through August, then weekly from September.
+const SEED = [
+  { id:"w1", date:"Jun 28", title:"Bearing One Another's Burdens", src:"Conference · April 2026", teacher:"Sione Taufa", photo:"", link:"" },
+  { id:"w2", date:"Jul 12", title:"The Power of Daily Repentance", src:"Conference · April 2026", teacher:"Viliami Mahe", photo:"", link:"" },
+  { id:"w3", date:"Jul 26", title:"Ministering as the Savior Did", src:"Teaching in the Savior's Way", teacher:"EQ Presidency", photo:"", link:"" },
+  { id:"w4", date:"Aug 9",  title:"Temple Covenants & the Family", src:"Conference · April 2026", teacher:"Inoke Langi", photo:"", link:"" },
+  { id:"w5", date:"Aug 23", title:"Faith to Act", src:"Conference · April 2026", teacher:"To be assigned", photo:"", link:"" },
+  { id:"w6", date:"Sep 6",  title:"Weekly lessons begin", src:"Come, Follow Me", teacher:"To be assigned", photo:"", link:"" },
+  { id:"w7", date:"Sep 13", title:"", src:"Come, Follow Me", teacher:"To be assigned", photo:"", link:"" }
+];
+
+// Teaching in the Savior's Way — full section structure (2016/2022). Summaries are plain-language;
+// the official text opens via each section's link.
+const SW_URL = (slug)=>MANUAL_URL; // override individual items below with real deep links anytime
+const SAVIORS_WAY = [
+  { part:"Introduction", tongan:"", items:[
+    { t:"Preface", s:"Who this guide is for, and how to use it in personal study and teacher council meetings." },
+    { t:"Teacher Council Meetings", s:"How wards hold monthly councils where teachers counsel together about Christlike teaching." },
+    { t:"Teaching in the Savior's Way", s:"The Savior taught from who He was; we learn His way by striving to live as He lived." },
+  ]},
+  { part:"Part 1 · Love Those You Teach", tongan:"ʻOfaʻi ʻa Kinautolu ʻOku Ke Akoʻi", items:[
+    { t:"Love Those You Teach", s:"Love is the reason and motivation for teaching — pray for learners by name and see them as God sees them.",
+      url:"https://www.churchofjesuschrist.org/study/manual/teaching-in-the-saviors-way-2022/07-part-2/08-love-those-you-teach?lang=eng" },
+    { t:"Focus on People, Not Lessons", s:"Center on the needs of those you teach rather than simply covering the material." },
+    { t:"Reach Out to Those Who Do Not Attend", s:"Like the shepherd who sought the one, minister to class members beyond the classroom." },
+  ]},
+  { part:"Part 2 · Teach by the Spirit", tongan:"Akoʻi ʻaki ʻa e Laumālie", items:[
+    { t:"Teach by the Spirit", s:"The Spirit is the real teacher; invite Him into both your preparation and your class." },
+    { t:"Prepare Yourself Spiritually", s:"Personal worthiness and study prepare you to teach with power." },
+    { t:"Live the Gospel of Jesus Christ", s:"Your own example gives credibility and power to what you teach." },
+    { t:"Create an Environment That Invites the Spirit", s:"Foster reverence, safety, and respect so the Spirit can be present." },
+    { t:"Take Advantage of Spontaneous Teaching Moments", s:"Be ready to teach in unplanned moments, as the Savior often did." },
+    { t:"Make a Plan", s:"Prepare with purpose while staying open to the Spirit's direction." },
+  ]},
+  { part:"Part 3 · Teach the Doctrine", tongan:"Akoʻi ʻa e Tokāteline", items:[
+    { t:"Teach the Doctrine", s:"Anchor lessons in scripture and the words of prophets; pure doctrine changes hearts." },
+    { t:"Use Music, Stories, and Art to Teach Doctrine", s:"Use varied means to help doctrine reach the heart." },
+    { t:"Respond to Difficult Questions with Faith", s:"Meet honest questions with patience, faith, and trustworthy sources." },
+    { t:"Teach the Children", s:"Adapt to how children learn — keep it simple, loving, and engaging." },
+    { t:"Teach the Youth", s:"Help youth find personal meaning and act on gospel truths." },
+  ]},
+  { part:"Part 4 · Invite Diligent Learning", tongan:"Fakaafeʻi ki he Ako Faivelenga", items:[
+    { t:"Invite Diligent Learning", s:"Real learning means changing — invite learners to engage, not just listen." },
+    { t:"Ask Inspired Questions", s:"Use questions that invite reflection, feeling, and testimony." },
+    { t:"Lead Inspired Discussions", s:"Guide discussions that let learners teach and lift one another." },
+    { t:"Invite Learners to Act", s:"Call learners to apply and live what they learn." },
+    { t:"Support Gospel Learning in the Home", s:"Encourage learning to continue and take root at home." },
+  ]},
+  { part:"Appendix", tongan:"", items:[
+    { t:"Improving as a Christlike Teacher: A Personal Evaluation", s:"A self-assessment to help you grow as a Christlike teacher." },
+    { t:"Orienting New Teachers", s:"A leader's responsibility to prepare and support new teachers." },
+  ]},
+];
+
+/* =================================================================
+   APP
+   ================================================================= */
+const $ = (s,r=document)=>r.querySelector(s);
+const esc = s => (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const initials = n => (n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase();
+const linkIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+
+$("#quorumName").textContent = QUORUM.name;
+$("#quorumTongan").textContent = QUORUM.tongan;
+$("#manualCta").href = MANUAL_URL;
+if (IMAGES.headerPhoto){ const h=$("#heroPhoto"); h.style.backgroundImage=`url("${IMAGES.headerPhoto}")`; h.classList.add("on"); }
+if (IMAGES.saviorPhoto){ const p=$("#swPhoto"); p.style.backgroundImage=`url("${IMAGES.saviorPhoto}")`; p.querySelector(".ph-note").style.display="none"; }
+
+// tabs
+const tabs = [["#tab-sched","#panel-sched"],["#tab-sw","#panel-sw"]];
+tabs.forEach(([t,p])=>$(t).addEventListener("click",()=>{
+  tabs.forEach(([tt,pp])=>{ const sel=tt===t; $(tt).setAttribute("aria-selected",sel); $(pp).classList.toggle("on",sel); });
+}));
+
+// ---- Savior's Way render ----
+function renderSW(){
+  $("#swWrap").innerHTML = SAVIORS_WAY.map(grp=>{
+    const head = `<div class="divider"><svg class="fd" viewBox="0 0 240 400"><use href="#feather"/></svg></div>
+      <div style="margin:0 2px 12px;"><p class="part-head">${esc(grp.part)}</p>${grp.tongan?`<p class="part-tongan">${esc(grp.tongan)}</p>`:""}</div>`;
+    const cards = grp.items.map(it=>`
+      <div class="sec-card">
+        <h4>${esc(it.t)}</h4>
+        <p>${esc(it.s)}</p>
+        <a class="read-link" href="${it.url||MANUAL_URL}" target="_blank" rel="noopener">Read on Gospel Library ${linkIcon}</a>
+      </div>`).join("");
+    return head+cards;
+  }).join("");
+}
+
+// ---- storage ----
+const LS_KEY = "riverton24-eq-schedule-v2";
+let schedule = [], editing = false, editId = null, remote = null;
+function setSync(live){ $("#syncDot").classList.toggle("live",live);
+  $("#syncLabel").textContent = live ? "Synced — everyone sees the latest" : "Saved on this device"; }
+
+async function initStore(){
+  if (FIREBASE_CONFIG && FIREBASE_CONFIG.projectId){
+    try{
+      const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+      const { getFirestore, doc, getDoc, setDoc, onSnapshot } =
+        await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+      const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+      const ref = doc(db, "eq", "riverton24");
+      const snap = await getDoc(ref);
+      schedule = snap.exists() ? (snap.data().weeks || []) : SEED.slice();
+      if (!snap.exists()) await setDoc(ref, { weeks: schedule });
+      onSnapshot(ref, s => { if (s.exists()){ schedule = s.data().weeks || []; render(); } });
+      remote = { save: arr => setDoc(ref, { weeks: arr }) };
+      setSync(true); return;
+    }catch(e){ console.warn("Firebase unavailable, using device storage.", e); }
+  }
+  try{ const raw = localStorage.getItem(LS_KEY); schedule = raw ? JSON.parse(raw) : SEED.slice(); }
+  catch{ schedule = SEED.slice(); }
+  setSync(false);
+}
+async function persist(){
+  if (remote){ try{ await remote.save(schedule); return; }catch(e){ console.warn(e); } }
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(schedule)); }catch{}
+}
+
+const avatarStyle = p => p ? `style="background-image:url('${encodeURI(p)}')"` : "";
+function render(){
+  const [first, ...rest] = schedule;
+  $("#featuredWrap").innerHTML = first ? `
+    <article class="featured">
+      <span class="featured__tag">This Sunday</span>
+      <p class="featured__date">${esc(first.date)}</p>
+      <h2 class="featured__title">${esc(first.title)||"To be announced"}</h2>
+      <p class="featured__src">${esc(first.src)}</p>
+      <div class="teacher">
+        <div class="avatar" ${avatarStyle(first.photo)}>${first.photo?"":initials(first.teacher)}</div>
+        <div class="teacher__meta"><b>${esc(first.teacher)||"To be assigned"}</b><span>Teaching</span></div>
+      </div>
+      ${first.link?`<a class="material-link" href="${esc(first.link)}" target="_blank" rel="noopener">${linkIcon} Open lesson material</a>`:""}
+      ${editing?`<div><button class="btn btn--ghost" style="margin-top:14px;font-size:12px;padding:7px 12px;" data-edit="${first.id}">Edit this week</button></div>`:""}
+    </article>` : `<p class="sw-intro">No lessons scheduled yet.</p>`;
+
+  $("#upcomingWrap").innerHTML = rest.length ? rest.map(w=>`
+    <div class="week">
+      <div class="week__date"><b>${(w.date||"").replace(/^\D*/,"")||"•"}</b><span>${(w.date||"").replace(/[\d ].*$/,"")||""}</span></div>
+      <div class="week__body">
+        <p class="week__title">${esc(w.title)||"To be announced"}</p>
+        <p class="week__src">${esc(w.src)}</p>
+        <div class="week__who">
+          <span class="chip" ${avatarStyle(w.photo)}>${w.photo?"":initials(w.teacher)}</span>
+          <span class="week__name">${esc(w.teacher)||"To be assigned"}</span>
+          ${w.link?`<a class="week__link" href="${esc(w.link)}" target="_blank" rel="noopener" aria-label="Open material">${linkIcon}</a>`:""}
+        </div>
+      </div>
+      ${editing?`<button class="week__edit" data-edit="${w.id}" aria-label="Edit">✎</button>`:""}
+    </div>`).join("") : `<p class="week__src" style="padding:8px 4px;">Nothing further scheduled.</p>`;
+
+  document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>openModal(b.getAttribute("data-edit"))));
+}
+
+// ---- edit ----
+$("#editToggle").addEventListener("click",()=>{
+  if (!editing){ const code = prompt("Instructor passcode:");
+    if (code !== EDIT_PASSCODE){ if(code!==null) alert("Incorrect passcode."); return; } }
+  editing = !editing;
+  $("#editToggle").textContent = editing ? "Done editing" : "Instructor edit";
+  $("#addWeekBtn").style.display = editing ? "inline-block" : "none";
+  $("#editNote").style.display = editing ? "inline" : "none";
+  render();
+});
+$("#addWeekBtn").addEventListener("click",()=>openModal(null));
+
+const modal = $("#modal");
+function openModal(id){
+  editId = id;
+  const w = id ? schedule.find(x=>x.id===id) : { date:"",title:"",src:"",teacher:"",photo:"",link:"" };
+  $("#modalTitle").textContent = id ? "Edit lesson" : "Add a week";
+  $("#fDate").value=w.date||""; $("#fTitle").value=w.title||""; $("#fSrc").value=w.src||"";
+  $("#fTeacher").value=w.teacher||""; $("#fPhoto").value=w.photo||""; $("#fLink").value=w.link||"";
+  $("#deleteBtn").style.display = id ? "block" : "none";
+  modal.classList.add("on"); setTimeout(()=>$("#fDate").focus(),50);
+}
+function closeModal(){ modal.classList.remove("on"); editId=null; }
+$("#cancelBtn").addEventListener("click",closeModal);
+$("#modalScrim").addEventListener("click",closeModal);
+$("#saveBtn").addEventListener("click",async()=>{
+  const data = { date:$("#fDate").value.trim(), title:$("#fTitle").value.trim(), src:$("#fSrc").value.trim(),
+    teacher:$("#fTeacher").value.trim(), photo:$("#fPhoto").value.trim(), link:$("#fLink").value.trim() };
+  if (editId){ Object.assign(schedule.find(x=>x.id===editId), data); }
+  else { schedule.push({ id:"w"+Date.now(), ...data }); }
+  await persist(); render(); closeModal();
+});
+$("#deleteBtn").addEventListener("click",async()=>{
+  if (!editId) return;
+  if (!confirm("Remove this week from the schedule?")) return;
+  schedule = schedule.filter(x=>x.id!==editId);
+  await persist(); render(); closeModal();
+});
+
+// ---- share ----
+let toastTimer;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("on"),2200); }
+const shareModal = $("#shareModal");
+const shareData = ()=>({ title:`${QUORUM.name} · EQ Instructor Guide`,
+  text:`${QUORUM.name} — lesson schedule & Teaching in the Savior's Way`, url:location.href });
+function openShare(){
+  const d = shareData();
+  $("#shEmail").href = `mailto:?subject=${encodeURIComponent(d.title)}&body=${encodeURIComponent(d.text+"\n\n"+d.url)}`;
+  $("#shText").href  = `sms:?&body=${encodeURIComponent(d.text+" "+d.url)}`;
+  $("#shMore").style.display = navigator.share ? "flex" : "none";
+  shareModal.classList.add("on");
+}
+function closeShare(){ shareModal.classList.remove("on"); }
+$("#shareBtn").addEventListener("click",openShare);
+$("#shareScrim").addEventListener("click",closeShare);
+$("#shareCancel").addEventListener("click",closeShare);
+$("#shCopy").addEventListener("click",async()=>{
+  try{ await navigator.clipboard.writeText(location.href); toast("Link copied"); }
+  catch{ prompt("Copy this link:", location.href); }
+  closeShare();
+});
+$("#shMore").addEventListener("click",async()=>{
+  if (navigator.share){ try{ await navigator.share(shareData()); }catch(e){} }
+  closeShare();
+});
+$("#shEmail").addEventListener("click",closeShare);
+$("#shText").addEventListener("click",closeShare);
+
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(modal.classList.contains("on"))closeModal(); if(shareModal.classList.contains("on"))closeShare(); }});
+
+// ---- go ----
+renderSW();
+await initStore();
+render();
+</script>
+</body>
+</html>
