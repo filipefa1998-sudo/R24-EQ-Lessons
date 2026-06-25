@@ -209,6 +209,9 @@
   .modal-context{background:var(--paper-2);border-radius:10px;padding:11px 13px;margin-bottom:16px;font-size:14px;color:var(--muted);line-height:1.35;}
   .modal-context b{color:var(--ink-2);font-weight:700;}
   .more-toggle{background:none;border:none;color:var(--garnet);font-weight:700;font-size:13.5px;cursor:pointer;padding:8px 2px;margin:4px 0 6px;}
+  .cadence-link{color:inherit;text-decoration:none;cursor:pointer;}
+  .cadence-link:hover{text-decoration:underline;}
+  .cadence-arrow{color:var(--garnet);font-weight:700;white-space:nowrap;}
 </style>
 </head>
 <body>
@@ -531,8 +534,8 @@ const UI = {
   toAssign:{en:"—", to:"—"},
   openMaterial:{en:"Open material", to:"Fakaava lēsoni"},
   readGL:{en:"Read on Gospel Library", to:"Lau ʻi he Gospel Library"},
-  cadence:{en:"Lessons run <b>every two weeks</b> through August, then <b>weekly from September</b>.",
-           to:"ʻOku fai ʻa e lēsoní ʻi he <b>uike ʻe ua</b> ʻo aʻu ki ʻAokosí, pea <b>fakauike mei Sēpitemá</b>."},
+  cadence:{en:"<a class='cadence-link' href='https://www.churchofjesuschrist.org/feature/sunday-meeting-schedule?lang=eng' target='_blank' rel='noopener'>Lessons run <b>every two weeks</b> through August, then <b>weekly from September</b>. <span class='cadence-arrow'>↗</span></a>",
+           to:"<a class='cadence-link' href='https://www.churchofjesuschrist.org/feature/sunday-meeting-schedule?lang=eng' target='_blank' rel='noopener'>ʻOku fai ʻa e lēsoní ʻi he <b>uike ʻe ua</b> ʻo aʻu ki ʻAokosí, pea <b>fakauike mei Sēpitemá</b>. <span class='cadence-arrow'>↗</span></a>"},
   editToggle:{en:"Instructor edit", to:"Liliu (Faiako)"}, editDone:{en:"Done editing", to:"Kuo ʻosi"},
   addWeek:{en:"+ Add a week", to:"+ Tānaki uike"},
   editNote:{en:"Editing on — tap a card to change it", to:"Liliu — lomiʻi ha kaati ke liliu"},
