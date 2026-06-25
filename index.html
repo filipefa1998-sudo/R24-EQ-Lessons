@@ -157,6 +157,51 @@
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
   @media (max-width:420px){.grid2{grid-template-columns:1fr;}}
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;}}
+
+  /* ===== font scale-up (larger, more readable) ===== */
+  body{font-size:16.5px;}
+  .tab{font-size:15px;} .tab small{font-size:11.5px;}
+  .section-label{font-size:12.5px;}
+  .cadence{font-size:14.5px;}
+  .datepill{font-size:13px;padding:6px 13px;}
+  .nowtag{font-size:10.5px;}
+  .lcard__avatar{width:82px;height:82px;font-size:23px;}
+  .lcard__title{font-size:23.5px;}
+  .lcard__title2{font-size:17px;}
+  .lcard__quote{font-size:16px;}
+  .lcard__quote2{font-size:14.5px;}
+  .lcard__speaker{font-size:14px;}
+  .taught-label{font-size:12px;} .taught-name{font-size:14.5px;}
+  .lcard__open{font-size:13.5px;}
+  .sw-intro{font-size:16.5px;}
+  .part-head{font-size:20.5px;}
+  .sec-card h4{font-size:18px;} .sec-card p{font-size:15px;} .read-link{font-size:14px;}
+  blockquote.scripture p{font-size:18px;}
+  .manual-cta{font-size:15.5px;}
+  .hero__eyebrow{font-size:12px;} .hero__tongan{font-size:16.5px;}
+  .hero__title{font-size:clamp(26px,7vw,34px);}
+  .field input{font-size:16px;} .field label{font-size:12px;}
+  .btn{font-size:14px;}
+  .modal__card h2{font-size:22px;}
+  .share-item{font-size:15px;}
+  footer.tag{font-size:12px;}
+
+  /* ===== image upload controls ===== */
+  .hidden-file{display:none;}
+  .photo-edit-row{position:absolute;bottom:12px;left:0;right:0;z-index:4;display:flex;gap:8px;justify-content:center;}
+  .photo-edit-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(244,235,215,.12);border:1px solid rgba(194,169,111,.5);
+    color:var(--gold-soft);font-family:inherit;font-weight:600;font-size:12px;padding:7px 13px;border-radius:20px;cursor:pointer;}
+  .photo-edit-pill:hover{background:rgba(244,235,215,.2);}
+  .sw-photo.editable{cursor:pointer;}
+  .photo-remove{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(20,12,8,.6);
+    color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:15px;z-index:3;}
+  .photo-row{display:flex;align-items:center;gap:14px;}
+  .photo-prev{width:66px;height:66px;border-radius:50%;background-color:var(--paper-2);background-size:cover;background-position:center;
+    border:1px solid var(--line-strong);flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:var(--muted-2);font-size:10.5px;text-align:center;}
+  .photo-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .modal-context{background:var(--paper-2);border-radius:10px;padding:11px 13px;margin-bottom:16px;font-size:14px;color:var(--muted);line-height:1.35;}
+  .modal-context b{color:var(--ink-2);font-weight:700;}
+  .more-toggle{background:none;border:none;color:var(--garnet);font-weight:700;font-size:13.5px;cursor:pointer;padding:8px 2px;margin:4px 0 6px;}
 </style>
 </head>
 <body>
@@ -282,6 +327,11 @@
       <h1 class="hero__title" id="quorumName">Riverton 24th Tongan Ward</h1>
       <p class="hero__tongan" id="quorumTongan">Kōlomu ʻo e Kaumātuʻa</p>
     </div>
+    <div class="photo-edit-row" id="heroEditRow" style="display:none;">
+      <button class="photo-edit-pill" id="heroPhotoPick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span id="heroPickLabel">Header photo</span></button>
+      <button class="photo-edit-pill" id="heroPhotoRemove" style="display:none;">Remove</button>
+    </div>
+    <input type="file" accept="image/*" id="heroFile" class="hidden-file" />
   </header>
   <div class="band" aria-hidden="true"></div>
 
@@ -310,7 +360,8 @@
   <!-- SAVIOR'S WAY -->
   <section class="panel" id="panel-sw" role="tabpanel" aria-labelledby="tab-sw">
     <p class="sw-intro" id="swIntro"></p>
-    <div class="sw-photo" id="swPhoto"><div class="ph-note">Add a photo here — the quorum, a temple, or Christ teaching.<br>Set <code>IMAGES.saviorPhoto</code> in the script.</div></div>
+    <div class="sw-photo" id="swPhoto"><div class="ph-note" id="swPhotoNote"></div><button class="photo-remove" id="swPhotoRemove" style="display:none;" aria-label="Remove photo">✕</button></div>
+    <input type="file" accept="image/*" id="swFile" class="hidden-file" />
     <blockquote class="scripture"><p>"I am the way, the truth, and the life."</p><cite>John 14:6</cite></blockquote>
     <div id="swWrap"></div>
     <a class="manual-cta" id="manualCta" href="#" target="_blank" rel="noopener"></a>
@@ -328,18 +379,32 @@
   <div class="modal__scrim" id="modalScrim"></div>
   <div class="modal__card">
     <h2 id="modalTitle">Edit lesson</h2>
-    <div class="field"><label>Date (e.g. Jun 28, 2026)</label><input id="fDate" type="text" /></div>
-    <div class="field"><label>Lesson title (English)</label><input id="fTitle" type="text" /></div>
-    <div class="field"><label>Lesson title (Tongan)</label><input id="fTitleTo" type="text" /></div>
-    <div class="grid2">
-      <div class="field"><label>Speaker</label><input id="fSpeaker" type="text" /></div>
-      <div class="field"><label>Speaker role</label><input id="fRole" type="text" /></div>
+    <div class="modal-context" id="modalContext"></div>
+    <div class="field">
+      <label>Speaker photo</label>
+      <div class="photo-row">
+        <div class="photo-prev" id="modalPhotoPrev">No photo</div>
+        <div class="photo-actions">
+          <button class="btn btn--ghost" id="photoPickBtn" type="button">Upload photo</button>
+          <button class="btn btn--ghost" id="photoClearBtn" type="button" style="display:none;">Remove</button>
+        </div>
+      </div>
+      <input type="file" accept="image/*" id="fPhotoFile" class="hidden-file" />
     </div>
-    <div class="field"><label>Speaker photo URL</label><input id="fPhoto" type="url" placeholder="https://…" /><div class="hint">Paste a portrait link, or leave blank for initials.</div></div>
-    <div class="field"><label>Quote (English)</label><input id="fQuote" type="text" /></div>
-    <div class="field"><label>Quote (Tongan)</label><input id="fQuoteTo" type="text" /></div>
     <div class="field"><label>Lesson / talk link</label><input id="fLink" type="url" placeholder="https://…" /></div>
-    <div class="field"><label>Taught by (instructor)</label><input id="fTeacher" type="text" /></div>
+    <div class="field"><label>Who's teaching</label><input id="fTeacher" type="text" placeholder="Instructor name" /></div>
+    <button class="more-toggle" id="moreToggle" type="button">More details ▾</button>
+    <div id="moreFields" style="display:none;">
+      <div class="field"><label>Date (e.g. Jun 28, 2026)</label><input id="fDate" type="text" /></div>
+      <div class="field"><label>Lesson title (English)</label><input id="fTitle" type="text" /></div>
+      <div class="field"><label>Lesson title (Tongan)</label><input id="fTitleTo" type="text" /></div>
+      <div class="grid2">
+        <div class="field"><label>Speaker</label><input id="fSpeaker" type="text" /></div>
+        <div class="field"><label>Speaker role</label><input id="fRole" type="text" /></div>
+      </div>
+      <div class="field"><label>Quote (English)</label><input id="fQuote" type="text" /></div>
+      <div class="field"><label>Quote (Tongan)</label><input id="fQuoteTo" type="text" /></div>
+    </div>
     <div class="modal__row"><button class="btn btn--ghost" id="cancelBtn">Cancel</button><button class="btn btn--garnet" id="saveBtn">Save</button></div>
     <button class="delete-link" id="deleteBtn" style="display:none;">Delete this lesson</button>
   </div>
@@ -474,6 +539,7 @@ const UI = {
   signinTitle:{en:"Instructor sign-in", to:"Hū mai (Faiako)"}, signinLabel:{en:"Passcode", to:"Kōtio"},
   signinGo:{en:"Sign in", to:"Hū"}, langLabel:{en:"Lea faka-Tonga", to:"English"},
   copied:{en:"Link copied", to:"Kuo hiki ʻa e linké"},
+  saveFail:{en:"Save failed — image may be too large", to:"Naʻe ʻikai lava ʻo tauhi — ʻoku fuʻu lahi nai ʻa e ʻimisí"},
 };
 
 /* ===================== APP ===================== */
@@ -488,8 +554,7 @@ const U = k => UI[k][lang];
 
 $("#quorumName").textContent = QUORUM.name;
 $("#quorumTongan").textContent = QUORUM.tongan;
-if (IMAGES.headerPhoto){ const h=$("#heroPhoto"); h.style.backgroundImage=`url("${IMAGES.headerPhoto}")`; h.classList.add("on"); }
-if (IMAGES.saviorPhoto){ const p=$("#swPhoto"); p.style.backgroundImage=`url("${IMAGES.saviorPhoto}")`; p.querySelector(".ph-note").style.display="none"; }
+// header & Savior's Way photos are uploaded via the UI (see media / applyMedia)
 
 // tabs
 const tabs = [["#tab-sched","#panel-sched"],["#tab-sw","#panel-sw"]];
@@ -540,8 +605,8 @@ function renderSW(){
 }
 
 // ---- storage ----
-const LS_KEY = "riverton24-eq-schedule-v3";
-let schedule = [], editing = false, editId = null, remote = null;
+const LS_KEY = "riverton24-eq-v4";
+let schedule = [], media = { heroPhoto:"", saviorPhoto:"" }, editing = false, editId = null, remote = null;
 function setSyncLabel(){ $("#syncLabel").textContent = remote ? U("synced") : U("saved"); }
 function setSync(live){ $("#syncDot").classList.toggle("live",live); setSyncLabel(); }
 
@@ -554,23 +619,39 @@ async function initStore(){
       const db = getFirestore(initializeApp(FIREBASE_CONFIG));
       const ref = doc(db, "eq", "r24-2026");
       const snap = await getDoc(ref);
-      schedule = snap.exists() ? (snap.data().weeks || []) : SEED.slice();
-      if (!snap.exists()) await setDoc(ref, { weeks: schedule });
-      onSnapshot(ref, s => { if (s.exists()){ schedule = s.data().weeks || []; renderSchedule(); } });
-      remote = { save: arr => setDoc(ref, { weeks: arr }) };
+      if (snap.exists()){ const d=snap.data(); schedule=d.weeks||[]; media=d.media||media; }
+      else { schedule=SEED.slice(); await setDoc(ref,{weeks:schedule, media}); }
+      onSnapshot(ref, s=>{ if(s.exists()){ const d=s.data(); schedule=d.weeks||[]; media=d.media||{heroPhoto:"",saviorPhoto:""}; renderSchedule(); applyMedia(); } });
+      remote = { save: obj => setDoc(ref, obj) };
       setSync(true); return;
     }catch(e){ console.warn("Firebase unavailable, using device storage.", e); }
   }
-  try{ const raw = localStorage.getItem(LS_KEY); schedule = raw ? JSON.parse(raw) : SEED.slice(); }
-  catch{ schedule = SEED.slice(); }
+  try{ const raw=localStorage.getItem(LS_KEY); if(raw){ const d=JSON.parse(raw); schedule=d.weeks||[]; media=d.media||media; } else schedule=SEED.slice(); }
+  catch{ schedule=SEED.slice(); }
   setSync(false);
 }
 async function persist(){
-  if (remote){ try{ await remote.save(schedule); return; }catch(e){ console.warn(e); } }
-  try{ localStorage.setItem(LS_KEY, JSON.stringify(schedule)); }catch{}
+  const payload = { weeks: schedule, media };
+  if (remote){ try{ await remote.save(payload); return; }catch(e){ console.warn(e); toast(U("saveFail")); } }
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(payload)); }catch(e){ toast(U("saveFail")); }
 }
 
-const bg = p => p ? `style="background-image:url('${encodeURI(p)}')"` : "";
+function applyMedia(){
+  const hp = media.heroPhoto || IMAGES.headerPhoto || "";
+  const h = $("#heroPhoto");
+  if (hp){ h.style.backgroundImage=`url("${hp}")`; h.classList.add("on"); } else { h.style.backgroundImage=""; h.classList.remove("on"); }
+  $("#heroEditRow").style.display = signedIn ? "flex" : "none";
+  $("#heroPhotoRemove").style.display = (signedIn && hp) ? "inline-flex" : "none";
+
+  const sp = media.saviorPhoto || IMAGES.saviorPhoto || "";
+  const p = $("#swPhoto"), note = $("#swPhotoNote");
+  if (sp){ p.style.backgroundImage=`url("${sp}")`; note.style.display="none"; }
+  else { p.style.backgroundImage=""; note.style.display="flex"; note.textContent = signedIn ? "Tap to add a photo" : ""; }
+  p.classList.toggle("editable", signedIn);
+  $("#swPhotoRemove").style.display = (signedIn && sp) ? "flex" : "none";
+}
+
+const bg = p => { if(!p) return ""; const u = p.startsWith("data:") ? p : encodeURI(p); return `style="background-image:url('${u}')"`; };
 function renderSchedule(){
   $("#schedWrap").innerHTML = schedule.map((w,i)=>{
     const isNow = i===0;
@@ -613,6 +694,7 @@ function refreshAdminBar(){
   $("#addWeekBtn").style.display = editing ? "inline-block" : "none";
   $("#editNote").style.display = editing ? "inline" : "none";
   $("#signoutBtn").style.display = signedIn ? "inline-block" : "none";
+  applyMedia();
 }
 $("#editToggle").addEventListener("click",()=>{
   if (!signedIn){ openSignin(); return; }
@@ -635,22 +717,38 @@ $("#addWeekBtn").addEventListener("click",()=>openModal(null));
 
 // ---- edit modal ----
 const modal = $("#modal");
+let modalPhoto = "";
+function showModalPhoto(){
+  const prev = $("#modalPhotoPrev");
+  if (modalPhoto){ prev.style.backgroundImage=`url("${modalPhoto}")`; prev.textContent=""; $("#photoClearBtn").style.display="inline-block"; }
+  else { prev.style.backgroundImage=""; prev.textContent="No photo"; $("#photoClearBtn").style.display="none"; }
+}
 function openModal(id){
   editId = id;
   const w = id ? schedule.find(x=>x.id===id) : {date:"",title:"",titleTo:"",quote:"",quoteTo:"",speaker:"",role:"",teacher:"",photo:"",link:""};
   $("#modalTitle").textContent = id ? "Edit lesson" : "Add a lesson";
+  $("#modalContext").innerHTML = id ? `<b>${esc(w.title)||"(untitled)"}</b>${w.speaker?" · "+esc(w.speaker):""}<br>${esc(w.date)}` : "New lesson — fill in the details below.";
   $("#fDate").value=w.date||""; $("#fTitle").value=w.title||""; $("#fTitleTo").value=w.titleTo||"";
-  $("#fSpeaker").value=w.speaker||""; $("#fRole").value=w.role||""; $("#fPhoto").value=w.photo||"";
+  $("#fSpeaker").value=w.speaker||""; $("#fRole").value=w.role||"";
   $("#fQuote").value=w.quote||""; $("#fQuoteTo").value=w.quoteTo||""; $("#fLink").value=w.link||""; $("#fTeacher").value=w.teacher||"";
+  modalPhoto = w.photo||""; showModalPhoto();
+  $("#moreFields").style.display = id ? "none" : "block";
+  $("#moreToggle").textContent = (id ? "More details ▾" : "Fewer details ▴");
   $("#deleteBtn").style.display = id ? "block" : "none";
-  modal.classList.add("on"); setTimeout(()=>$("#fDate").focus(),50);
+  modal.classList.add("on"); setTimeout(()=>$("#fLink").focus(),50);
 }
 function closeModal(){ modal.classList.remove("on"); editId=null; }
+$("#moreToggle").addEventListener("click",()=>{ const m=$("#moreFields"); const open=m.style.display!=="none";
+  m.style.display = open?"none":"block"; $("#moreToggle").textContent = open?"More details ▾":"Fewer details ▴"; });
+$("#photoPickBtn").addEventListener("click",()=>$("#fPhotoFile").click());
+$("#fPhotoFile").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return;
+  try{ modalPhoto = await processImage(f,320,0.8); showModalPhoto(); }catch{ toast(U("saveFail")); } e.target.value=""; });
+$("#photoClearBtn").addEventListener("click",()=>{ modalPhoto=""; showModalPhoto(); });
 $("#cancelBtn").addEventListener("click",closeModal);
 $("#modalScrim").addEventListener("click",closeModal);
 $("#saveBtn").addEventListener("click",async()=>{
   const data = { date:$("#fDate").value.trim(), title:$("#fTitle").value.trim(), titleTo:$("#fTitleTo").value.trim(),
-    speaker:$("#fSpeaker").value.trim(), role:$("#fRole").value.trim(), photo:$("#fPhoto").value.trim(),
+    speaker:$("#fSpeaker").value.trim(), role:$("#fRole").value.trim(), photo:modalPhoto,
     quote:$("#fQuote").value.trim(), quoteTo:$("#fQuoteTo").value.trim(), link:$("#fLink").value.trim(), teacher:$("#fTeacher").value.trim() };
   if (editId){ Object.assign(schedule.find(x=>x.id===editId), data); }
   else { schedule.push({ id:"w"+Date.now(), ...data }); }
@@ -662,6 +760,29 @@ $("#deleteBtn").addEventListener("click",async()=>{
   schedule = schedule.filter(x=>x.id!==editId);
   await persist(); renderSchedule(); closeModal();
 });
+
+// ---- images (upload, resize, compress) ----
+function processImage(file, maxDim, q){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = ev => { const img = new Image();
+      img.onload = ()=>{ let w=img.width, h=img.height; const s=Math.min(1, maxDim/Math.max(w,h));
+        w=Math.round(w*s); h=Math.round(h*s);
+        const c=document.createElement("canvas"); c.width=w; c.height=h;
+        c.getContext("2d").drawImage(img,0,0,w,h);
+        resolve(c.toDataURL("image/jpeg", q)); };
+      img.onerror=reject; img.src=ev.target.result; };
+    reader.onerror=reject; reader.readAsDataURL(file);
+  });
+}
+$("#heroPhotoPick").addEventListener("click",()=>$("#heroFile").click());
+$("#heroFile").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return;
+  try{ media.heroPhoto = await processImage(f,1000,0.72); await persist(); applyMedia(); }catch{ toast(U("saveFail")); } e.target.value=""; });
+$("#heroPhotoRemove").addEventListener("click",async()=>{ media.heroPhoto=""; await persist(); applyMedia(); });
+$("#swPhoto").addEventListener("click",()=>{ if(signedIn) $("#swFile").click(); });
+$("#swFile").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return;
+  try{ media.saviorPhoto = await processImage(f,1000,0.72); await persist(); applyMedia(); }catch{ toast(U("saveFail")); } e.target.value=""; });
+$("#swPhotoRemove").addEventListener("click",async ev=>{ ev.stopPropagation(); media.saviorPhoto=""; await persist(); applyMedia(); });
 
 // ---- share ----
 let toastTimer;
@@ -691,6 +812,7 @@ $("#manualCta").href = MANUAL_URL;
 await initStore();
 refreshAdminBar();
 applyLang();   // sets all chrome + renders schedule + SW
+applyMedia();  // header + Savior's Way photos
 </script>
 </body>
 </html>
