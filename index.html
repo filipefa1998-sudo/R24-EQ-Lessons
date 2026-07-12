@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Riverton 24th · Elders Quorum Instructor Guide</title>
+<title>Riverton 24th · Elders Quorum Lessons</title>
 <meta name="theme-color" content="#1c150e" />
 <link rel="apple-touch-icon" href="icon-180.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
@@ -78,12 +78,26 @@
   /* ---------- lesson card (WJ8 layout) ---------- */
   .lcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
-  .lcard--now{border-color:var(--garnet);box-shadow:0 18px 38px -22px rgba(124,34,48,.45);}
+  .lcard--now{border:2px solid var(--garnet);padding-top:14px;overflow:hidden;
+    background:linear-gradient(180deg,#f9f0da 0%,var(--card) 55%);
+    box-shadow:0 0 0 4px rgba(156,122,60,.22), 0 22px 46px -20px rgba(124,34,48,.55);
+    animation:nowGlow 2.8s ease-in-out infinite;}
+  @keyframes nowGlow{
+    0%,100%{box-shadow:0 0 0 4px rgba(156,122,60,.22), 0 22px 46px -20px rgba(124,34,48,.55);}
+    50%{box-shadow:0 0 0 6px rgba(156,122,60,.34), 0 22px 46px -18px rgba(124,34,48,.65);}
+  }
+  .nowribbon{display:flex;align-items:center;justify-content:center;gap:8px;
+    margin:-14px -18px 14px;padding:8px 14px;
+    background:linear-gradient(90deg,var(--garnet-deep),var(--garnet) 50%,var(--garnet-deep));
+    border-bottom:1.5px solid var(--gold);color:#f4ebd7;
+    font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;}
+  .nowribbon .nowdot{width:7px;height:7px;border-radius:50%;background:var(--gold-soft);flex:0 0 auto;
+    animation:nowDot 1.6s ease-in-out infinite;}
+  @keyframes nowDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(.7);}}
+  .lcard--now .datepill{background:var(--garnet);color:#f4ebd7;border-color:var(--garnet-deep);}
   .lcard__top{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
   .datepill{display:inline-block;background:rgba(156,122,60,.16);color:var(--gold-text);border:1px solid rgba(156,122,60,.34);
     font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;}
-  .nowtag{margin-left:auto;background:var(--garnet);color:#f4ebd7;font-size:10px;font-weight:800;letter-spacing:.13em;
-    text-transform:uppercase;padding:4px 10px;border-radius:20px;}
   .lcard__body{display:flex;gap:15px;}
   .lcard__avatar{width:72px;height:72px;border-radius:50%;flex:0 0 auto;background:var(--garnet);background-size:cover;
     background-position:center;display:flex;align-items:center;justify-content:center;color:#f4ebd7;font-weight:800;font-size:20px;
@@ -171,7 +185,6 @@
   .section-label{font-size:12.5px;}
   .cadence{font-size:14.5px;}
   .datepill{font-size:13px;padding:6px 13px;}
-  .nowtag{font-size:10.5px;}
   .lcard__avatar{width:82px;height:82px;font-size:23px;}
   .lcard__title{font-size:23.5px;}
   .lcard__title2{font-size:17px;}
@@ -333,7 +346,7 @@
     <div class="hero__photo" id="heroPhoto"></div>
     <div class="hero__inner">
       <svg class="crest" viewBox="0 0 240 400" aria-hidden="true"><use href="#feather"/></svg>
-      <p class="hero__eyebrow" id="heroEyebrow">Elders Quorum · Instructor Guide</p>
+      <p class="hero__eyebrow" id="heroEyebrow">Elders Quorum · Lessons</p>
       <h1 class="hero__title" id="quorumName">Riverton 24th Tongan Ward</h1>
       <p class="hero__tongan" id="quorumTongan">Kōlomu ʻo e Kaumātuʻa</p>
     </div>
@@ -434,7 +447,7 @@
 <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
   <div class="modal__scrim" id="shareScrim"></div>
   <div class="modal__card">
-    <h2 id="shareTitle">Share this guide</h2>
+    <h2 id="shareTitle">Share these lessons</h2>
     <div class="share-list">
       <a class="share-item" id="shEmail"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span id="shEmailL">Email</span></a>
       <a class="share-item" id="shText"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span id="shTextL">Text message</span></a>
@@ -522,14 +535,15 @@ const SAVIORS_WAY = [
 
 /* ===================== TRANSLATIONS (UI chrome) ===================== */
 const UI = {
-  eyebrow:{en:"Elders Quorum · Instructor Guide", to:"Kōlomu ʻo e Kaumātuʻa · Tataki Faiako"},
+  eyebrow:{en:"Elders Quorum · Lessons", to:"Kōlomu ʻo e Kaumātuʻa · Ngaahi Lēsoni"},
   schedMain:{en:"Schedule", to:"Lēsoni"}, schedSub:{en:"Lēsoni", to:"Schedule"},
   swMain:{en:"The Savior's Way", to:"Founga ʻa e Fakamoʻui"}, swSub:{en:"Founga ʻa e Fakamoʻui", to:"The Savior's Way"},
   swIntro:{en:"The complete manual, divided by section. Tap <b>Read on Gospel Library</b> on any section to open the full, official text.",
            to:"Ko e tohi kakató, vahevahe ʻi he ngaahi kongá. Lomiʻi ʻa <b>Lau ʻi he Gospel Library</b> ʻi ha konga ke fakaava ʻa e kakato ʻo e tohí."},
   manualCta:{en:"Open the full manual on Gospel Library →", to:"Fakaava ʻa e tohi kakató ʻi he Gospel Library →"},
   lessons:{en:"Lessons", to:"Ngaahi Lēsoni"},
-  thisSunday:{en:"This Sunday", to:"Sāpate Ní"},
+  thisSunday:{en:"This Sunday's Lesson", to:"Lēsoni ʻo e Sāpate Ní"},
+  nextLesson:{en:"Next Lesson", to:"Lēsoni Hoko"},
   taughtBy:{en:"Taught by", to:"Akoʻi ʻe"},
   toAssign:{en:"—", to:"—"},
   openMaterial:{en:"Open material", to:"Fakaava lēsoni"},
@@ -543,7 +557,7 @@ const UI = {
   saved:{en:"Saved on this device", to:"Tauhi ʻi he meʻangaué ni"},
   synced:{en:"Synced — everyone sees the latest", to:"Sync — ʻoku sio kotoa ki he fakamuimuitahá"},
   made:{en:'Made with <span class="mark">◆</span> for the quorum', to:'Ngaohi ʻaki <span class="mark">◆</span> maʻá e kōlomú'},
-  shareTitle:{en:"Share this guide", to:"Vahevahe ʻa e tataki ní"},
+  shareTitle:{en:"Share these lessons", to:"Vahevahe ʻa e ngaahi lēsoní"},
   shEmail:{en:"Email", to:"ʻĪmeili"}, shText:{en:"Text message", to:"Pōpoaki"}, shCopy:{en:"Copy link", to:"Hiki ʻa e link"},
   shMore:{en:"More sharing options…", to:"Founga vahevahe kehe…"}, close:{en:"Close", to:"Tāpuni"},
   signinTitle:{en:"Instructor sign-in", to:"Hū mai (Faiako)"}, signinLabel:{en:"Passcode", to:"Kōtio"},
@@ -666,17 +680,31 @@ function applyMedia(){
 }
 
 const bg = p => { if(!p) return ""; const u = p.startsWith("data:") ? p : encodeURI(p); return `style="background-image:url('${u}')"`; };
+function nowIndex(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  let best = -1, bestT = Infinity;
+  schedule.forEach((w,i)=>{
+    const d = new Date(w.date);
+    if (isNaN(d)) return;
+    d.setHours(0,0,0,0);
+    const t = d.getTime();
+    if (t >= today.getTime() && t < bestT){ bestT = t; best = i; }
+  });
+  return { idx: best, daysOut: best === -1 ? null : Math.round((bestT - today.getTime()) / 86400000) };
+}
 function renderSchedule(){
+  const now = nowIndex();
+  const nowLabel = now.daysOut !== null && now.daysOut <= 6 ? U("thisSunday") : U("nextLesson");
   $("#schedWrap").innerHTML = schedule.map((w,i)=>{
-    const isNow = i===0;
+    const isNow = i===now.idx;
     const titleMain = lang==="to" ? (w.titleTo||w.title) : w.title;
     const titleSub  = lang==="to" ? w.title : w.titleTo;
     const quoteMain = lang==="to" ? (w.quoteTo||w.quote) : w.quote;
     const quoteSub  = lang==="to" ? w.quote : w.quoteTo;
     return `<article class="lcard ${isNow?'lcard--now':''}">
+      ${isNow?`<div class="nowribbon"><span class="nowdot"></span>${nowLabel}<span class="nowdot"></span></div>`:""}
       <div class="lcard__top">
         <span class="datepill">Sun · ${esc(w.date)}</span>
-        ${isNow?`<span class="nowtag">${U("thisSunday")}</span>`:""}
       </div>
       <div class="lcard__body">
         <div class="lcard__avatar" ${bg(w.photo)}>${w.photo?"":initials(w.speaker)}</div>
@@ -820,7 +848,7 @@ $("#swPhotoRemove").addEventListener("click",async ev=>{ ev.stopPropagation(); m
 let toastTimer;
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("on"),2200); }
 const shareModal = $("#shareModal");
-const shareData = ()=>({ title:`${QUORUM.name} · EQ Instructor Guide`, text:`${QUORUM.name} — lesson schedule & Teaching in the Savior's Way`, url:location.href });
+const shareData = ()=>({ title:`${QUORUM.name} · EQ Lessons`, text:`${QUORUM.name} — lesson schedule & Teaching in the Savior's Way`, url:location.href });
 function openShare(){
   const d = shareData();
   $("#shEmail").href = `mailto:?subject=${encodeURIComponent(d.title)}&body=${encodeURIComponent(d.text+"\n\n"+d.url)}`;
